@@ -451,6 +451,44 @@ INSERT INTO Tarifa (SitioId, AlojamientoId, TipoTemporadaId, NumeroPersonasMin, 
 (1, NULL, 3, 1, 4, 2, 37000.00, 11000.00, 1, 'Tarifa especial 2 habitaciones 1-4 personas', 1);
 GO
 
+-- Tarifas para El Placer - Fusagasugá
+INSERT INTO Tarifa (SitioId, AlojamientoId, TipoTemporadaId, NumeroPersonasMin, NumeroPersonasMax, NumeroHabitaciones, PrecioBase, PrecioPersonaAdicional, EsTarifaEspecial, Descripcion, Activo) VALUES 
+(2, NULL, 1, 1, 4, 1, 70000.00, 16000.00, 0, 'Alojamiento 1 habitación/noche 1-4 personas', 1),
+(2, NULL, 1, 1, 4, 2, 90000.00, 16000.00, 0, 'Alojamiento 2 habitaciones/noche 1-4 personas', 1),
+(2, NULL, 3, 1, 4, 1, 27000.00, 11000.00, 1, 'Tarifa especial 1 habitación 1-4 personas', 1),
+(2, NULL, 3, 1, 4, 2, 37000.00, 11000.00, 1, 'Tarifa especial 2 habitaciones 1-4 personas', 1);
+GO
+
+-- Tarifas para Gonzalo Morante - Chinchiná
+INSERT INTO Tarifa (SitioId, AlojamientoId, TipoTemporadaId, NumeroPersonasMin, NumeroPersonasMax, NumeroHabitaciones, PrecioBase, PrecioPersonaAdicional, EsTarifaEspecial, Descripcion, Activo) VALUES 
+(3, NULL, 1, 1, 4, 1, 70000.00, 16000.00, 0, 'Alojamiento 1 habitación/noche 1-4 personas', 1),
+(3, NULL, 1, 1, 4, 2, 90000.00, 16000.00, 0, 'Alojamiento 2 habitaciones/noche 1-4 personas', 1),
+(3, NULL, 3, 1, 4, 1, 27000.00, 11000.00, 1, 'Tarifa especial 1 habitación 1-4 personas', 1),
+(3, NULL, 3, 1, 4, 2, 37000.00, 11000.00, 1, 'Tarifa especial 2 habitaciones 1-4 personas', 1);
+GO
+
+-- Tarifas para Tablones - Palmira
+INSERT INTO Tarifa (SitioId, AlojamientoId, TipoTemporadaId, NumeroPersonasMin, NumeroPersonasMax, NumeroHabitaciones, PrecioBase, PrecioPersonaAdicional, EsTarifaEspecial, Descripcion, Activo) VALUES 
+(4, NULL, 1, 1, 4, 1, 70000.00, 16000.00, 0, 'Alojamiento 1 habitación/noche 1-4 personas', 1),
+(4, NULL, 1, 1, 4, 2, 90000.00, 16000.00, 0, 'Alojamiento 2 habitaciones/noche 1-4 personas', 1),
+(4, NULL, 3, 1, 4, 1, 27000.00, 11000.00, 1, 'Tarifa especial 1 habitación 1-4 personas', 1),
+(4, NULL, 3, 1, 4, 2, 37000.00, 11000.00, 1, 'Tarifa especial 2 habitaciones 1-4 personas', 1);
+GO
+
+-- Tarifas para Manguruma - Santa Fe de Antioquia
+INSERT INTO Tarifa (SitioId, AlojamientoId, TipoTemporadaId, NumeroPersonasMin, NumeroPersonasMax, NumeroHabitaciones, PrecioBase, PrecioPersonaAdicional, EsTarifaEspecial, Descripcion, Activo) VALUES 
+(5, NULL, 1, 1, 4, 1, 70000.00, 16000.00, 0, 'Alojamiento 1 habitación/noche 1-4 personas', 1),
+(5, NULL, 1, 1, 4, 2, 90000.00, 16000.00, 0, 'Alojamiento 2 habitaciones/noche 1-4 personas', 1),
+(5, NULL, 3, 1, 4, 1, 27000.00, 11000.00, 1, 'Tarifa especial 1 habitación 1-4 personas', 1),
+(5, NULL, 3, 1, 4, 2, 37000.00, 11000.00, 1, 'Tarifa especial 2 habitaciones 1-4 personas', 1);
+GO
+
+-- Tarifas para Federman - Bogotá
+INSERT INTO Tarifa (SitioId, AlojamientoId, TipoTemporadaId, NumeroPersonasMin, NumeroPersonasMax, NumeroHabitaciones, PrecioBase, PrecioPersonaAdicional, EsTarifaEspecial, Descripcion, Activo) VALUES 
+(6, NULL, 1, 1, 2, 1, 50000.00, NULL, 0, 'Habitación/noche para 1-2 personas', 1),
+(6, NULL, 2, 1, 2, 1, 65000.00, NULL, 0, 'Habitación/noche alta temporada para 1-2 personas', 1);
+GO
+
 -- Tarifas para Apartamentos Suramericana - Medellín
 INSERT INTO Tarifa (SitioId, AlojamientoId, TipoTemporadaId, NumeroPersonasMin, NumeroPersonasMax, NumeroHabitaciones, PrecioBase, PrecioPersonaAdicional, EsTarifaEspecial, Descripcion, Activo) VALUES 
 (7, 2, 1, 1, 1, 1, 63000.00, NULL, 0, 'Habitación/noche una persona', 1),

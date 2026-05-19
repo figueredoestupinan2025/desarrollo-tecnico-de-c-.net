@@ -151,7 +151,7 @@ public class AccountController : Controller
             await _emailService.SendEmailAsync(
                 to: user.Email,
                 subject: "Restablecer Contraseña - Fondo XYZ",
-                body: $"Por favor restablece tu contraseña haciendo clic <a href='{callbackUrl}'>aquí</a>.");
+                message: $"Por favor restablece tu contraseña haciendo clic <a href='{callbackUrl}'>aquí</a>.");
 
             return RedirectToAction(nameof(ForgotPasswordConfirmation));
         }
