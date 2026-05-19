@@ -39,7 +39,7 @@ BEGIN
           FROM ReservaHabitacion rh
           INNER JOIN Reserva r ON rh.ReservaId = r.Id
           WHERE r.EstadoReservaId IN (1, 2)
-            AND (@FechaInicio <= r.FechaFin AND @FechaFin >= r.FechaInicio)
+            AND (@FechaInicio < r.FechaFin AND @FechaFin > r.FechaInicio)
       )
     ORDER BY s.Nombre, a.Nombre, h.Numero;
 END
@@ -80,7 +80,7 @@ BEGIN
           FROM ReservaHabitacion rh
           INNER JOIN Reserva r ON rh.ReservaId = r.Id
           WHERE r.EstadoReservaId IN (1, 2)
-            AND (@FechaInicio <= r.FechaFin AND @FechaFin >= r.FechaInicio)
+            AND (@FechaInicio < r.FechaFin AND @FechaFin > r.FechaInicio)
       )
     ORDER BY s.Nombre, a.Nombre, h.Numero;
 END

@@ -32,8 +32,8 @@ public class ReservaService : IReservaService
         {
             var habitacionesOcupadas = await _context.ReservasHabitaciones
                 .Where(rh =>
-                    rh.Reserva.FechaInicio <= fechaFin &&
-                    rh.Reserva.FechaFin >= fechaInicio &&
+                    rh.Reserva.FechaInicio < fechaFin &&
+                    rh.Reserva.FechaFin > fechaInicio &&
                     (rh.Reserva.EstadoReservaId == 1 || rh.Reserva.EstadoReservaId == 2))
                 .Select(rh => rh.HabitacionId)
                 .ToListAsync();
@@ -83,8 +83,8 @@ public class ReservaService : IReservaService
         {
             var habitacionesOcupadas = await _context.ReservasHabitaciones
                 .Where(rh =>
-                    rh.Reserva.FechaInicio <= fechaFin &&
-                    rh.Reserva.FechaFin >= fechaInicio &&
+                    rh.Reserva.FechaInicio < fechaFin &&
+                    rh.Reserva.FechaFin > fechaInicio &&
                     (rh.Reserva.EstadoReservaId == 1 || rh.Reserva.EstadoReservaId == 2))
                 .Select(rh => rh.HabitacionId)
                 .ToListAsync();
