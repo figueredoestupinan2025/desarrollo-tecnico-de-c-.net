@@ -248,6 +248,33 @@ public class ReservaService : IReservaService
         }
     }
 
+    public async Task<int> ObtenerTipoTemporadaPorFechaAsync(DateTime fecha)
+    {
+        try
+        {
+            var tipoTemporadaParam = new SqlParameter("@TipoTemporadaId", System.Data.SqlDbType.Int)
+            {
+                Direction = System.Data.ParameterDirection.Output
+            };
+
+            await _context.Database.ExecuteSqlRawAsync(
+                "EXEC ObtenerTemporadaPorFecha @Fecha, @TipoTemporadaId OUTPUT",
+                new SqlParameter("@Fecha", fecha),
+                tipoTemporadaParam);
+
+            return (int)(tipoTemporadaParam.Value ?? 1);
+        }
+        catch
+        {
+            var temporada = await _context.Temporadas
+                .Where(t => t.Activo && fecha >= t.FechaInicio && fecha <= t.FechaFin)
+                .OrderBy(t => t.TipoTemporadaId)
+                .FirstOrDefaultAsync();
+
+            return temporada?.TipoTemporadaId ?? 1;
+        }
+    }
+
     public async Task<Reserva> CrearReservaAsync(Reserva reserva)
     {
         _context.Reservas.Add(reserva);

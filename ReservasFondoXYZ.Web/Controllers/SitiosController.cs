@@ -40,8 +40,10 @@ public class SitiosController : Controller
     }
 
     // GET: Sitios/Create
-    public IActionResult Create()
+    public async Task<IActionResult> Create()
     {
+        var tiposSitio = await _sitioService.ObtenerTiposSitioAsync();
+        ViewBag.TipoSitioId = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(tiposSitio, "Id", "Nombre");
         return View();
     }
 
@@ -55,6 +57,8 @@ public class SitiosController : Controller
             await _sitioService.CrearAsync(sitio);
             return RedirectToAction(nameof(Index));
         }
+        var tiposSitio = await _sitioService.ObtenerTiposSitioAsync();
+        ViewBag.TipoSitioId = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(tiposSitio, "Id", "Nombre", sitio.TipoSitioId);
         return View(sitio);
     }
 
@@ -71,6 +75,8 @@ public class SitiosController : Controller
         {
             return NotFound();
         }
+        var tiposSitio = await _sitioService.ObtenerTiposSitioAsync();
+        ViewBag.TipoSitioId = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(tiposSitio, "Id", "Nombre", sitio.TipoSitioId);
         return View(sitio);
     }
 
@@ -89,6 +95,8 @@ public class SitiosController : Controller
             await _sitioService.ActualizarAsync(sitio);
             return RedirectToAction(nameof(Index));
         }
+        var tiposSitio = await _sitioService.ObtenerTiposSitioAsync();
+        ViewBag.TipoSitioId = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(tiposSitio, "Id", "Nombre", sitio.TipoSitioId);
         return View(sitio);
     }
 

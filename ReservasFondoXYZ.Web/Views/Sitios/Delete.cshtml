@@ -1,0 +1,52 @@
+@model ReservasFondoXYZ.Data.Models.Sitio
+
+@{
+    ViewData["Title"] = "Eliminar Sitio";
+}
+
+<div class="container mt-4">
+    <h1 class="text-center mb-4" style="color: #8B0000;">Eliminar Sitio</h1>
+    
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-danger text-white">
+                    <h4>¿Está seguro de eliminar este sitio?</h4>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-warning" role="alert">
+                        Esta acción no se puede deshacer.
+                    </div>
+                    
+                    <dl class="row">
+                        <dt class="col-sm-3">Nombre</dt>
+                        <dd class="col-sm-9">@Model.Nombre</dd>
+                        
+                        <dt class="col-sm-3">Tipo de Sitio</dt>
+                        <dd class="col-sm-9">@Model.TipoSitio?.Nombre</dd>
+                        
+                        <dt class="col-sm-3">Ubicación</dt>
+                        <dd class="col-sm-9">@Model.Ubicacion</dd>
+                        
+                        <dt class="col-sm-3">Descripción</dt>
+                        <dd class="col-sm-9">@Model.Descripcion</dd>
+                    </dl>
+                </div>
+                <div class="card-footer">
+                    <form asp-action="Delete">
+                        <input type="hidden" asp-for="Id" />
+                        
+                        <div class="d-flex justify-content-between">
+                            <a asp-action="Index" class="btn btn-secondary">
+                                <i class="bi bi-arrow-left"></i> Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-danger">
+                                <i class="bi bi-trash"></i> Confirmar Eliminación
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

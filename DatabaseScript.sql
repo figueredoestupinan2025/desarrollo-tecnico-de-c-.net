@@ -365,6 +365,75 @@ INSERT INTO Alojamiento (SitioId, TipoAlojamientoId, Nombre, Descripcion, Capaci
 (8, 4, 'Apartamento 401', 'Tiene Sala comedor, cocina, 1 baño, dos habitaciones y un sitio para parqueo. Capacidad máxima: 6 personas.', 6, 2, 1);
 GO
 
+-- Alojamientos para El Placer - Fusagasugá
+INSERT INTO Alojamiento (SitioId, TipoAlojamientoId, Nombre, Descripcion, CapacidadMaxima, NumeroHabitaciones, Activo) VALUES 
+(2, 2, 'Alojamiento 1', 'Tiene dos habitaciones, baño y Televisor, una con cama doble y una sencilla, la otra con una cama sencilla.', 5, 2, 1),
+(2, 2, 'Alojamiento 2', 'Tiene dos habitaciones, baño y Televisor, una con cama doble, la otra con 4 camas sencillas.', 6, 2, 1),
+(2, 2, 'Alojamiento 3', 'Tiene una habitación con cama doble y 2 camas sencillas, baño y Televisor.', 4, 1, 1),
+(2, 2, 'Alojamiento 4', 'Tiene dos habitaciones, baño y Televisor, una con cama doble y una sencilla, la otra con una cama sencilla.', 4, 2, 1),
+(2, 3, 'Cabaña 5', 'Sala de estar con sofá cama y Televisor, baño, habitación con cama doble y una cama sencilla, cocineta equipada y nevera, terraza comedor.', 4, 1, 1),
+(2, 3, 'Cabaña 6', 'Sala de estar con sofá cama y Televisor, baño, habitación con cama doble y una cama sencilla, cocineta equipada y nevera, terraza comedor.', 4, 1, 1),
+(2, 3, 'Cabaña 7', 'Sala de estar con sofá cama y Televisor, baño, habitación con cama doble y una cama sencilla, cocineta equipada y nevera, terraza comedor.', 4, 1, 1),
+(2, 3, 'Cabaña 8', 'Sala de estar con sofá cama y Televisor, baño, habitación con cama doble y una cama sencilla, cocineta equipada y nevera, terraza comedor.', 4, 1, 1);
+GO
+
+-- Alojamientos para Gonzalo Morante - Chinchiná
+INSERT INTO Alojamiento (SitioId, TipoAlojamientoId, Nombre, Descripcion, CapacidadMaxima, NumeroHabitaciones, Activo) VALUES 
+(3, 2, 'Alojamiento 1', 'Tiene cocineta, baño, Televisor y 2 habitaciones. La 1 con dos camas sencillas, mas dos adicionales. La 2 con una cama doble y una sencilla.', 6, 2, 1),
+(3, 2, 'Alojamiento 2', 'Tiene cocineta, baño, Televisor y 2 habitaciones. La 1 con una cama doble, mas una auxiliar doble. La 2 con dos camas sencillas, mas dos auxiliares.', 6, 2, 1),
+(3, 2, 'Alojamiento 4', 'Tiene cocineta, baño, Televisor y una habitación con cama doble y una cama sencilla.', 3, 1, 1),
+(3, 3, 'Alojamiento 3 (Tipo A)', 'Cocineta, dos baños, sala comedor, Televisor y dos habitaciones. La 1 con cama doble. La 2 con dos camas sencillas, mas dos auxiliares.', 5, 2, 1),
+(3, 3, 'Alojamiento 5 (Tipo B)', 'Cocineta, baño, sala con sofá, Televisor una habitación con cama doble y una cama sencilla.', 3, 1, 1),
+(3, 3, 'Alojamiento 6 (Tipo B)', 'Cocineta, baño, sala con sofá, Televisor, una habitación con cama doble y una cama sencilla.', 3, 1, 1);
+GO
+
+-- Alojamientos para Tablones - Palmira
+INSERT INTO Alojamiento (SitioId, TipoAlojamientoId, Nombre, Descripcion, CapacidadMaxima, NumeroHabitaciones, Activo) VALUES 
+(4, 2, 'Alojamiento 1', 'Una habitación, con cama doble y un camarote. Televisor, baño, cocineta con nevera, comedor.', 4, 1, 1),
+(4, 2, 'Alojamiento 2', 'Una habitación, con cama doble y un camarote. Televisor, baño y cocineta con nevera, comedor.', 4, 1, 1),
+(4, 2, 'Alojamiento 3', 'Dos habitaciones. La habitación 1 con cama doble y un camarote. La habitación 2 con dos camarotes. Sala de estar con Televisor, baño y cocineta.', 6, 2, 1),
+(4, 2, 'Alojamiento 4', 'Dos habitaciones. La habitación 1 con cama doble y un camarote. La habitación 2 con dos camarotes. Sala de estar con Televisor, baño y cocineta.', 6, 2, 1);
+GO
+
+-- Alojamientos para Manguruma - Santa Fe de Antioquia
+INSERT INTO Alojamiento (SitioId, TipoAlojamientoId, Nombre, Descripcion, CapacidadMaxima, NumeroHabitaciones, Activo) VALUES 
+(5, 2, 'Alojamiento 1', 'Una cama doble y un camarote. Baño y terraza. Televisor.', 4, 1, 1),
+(5, 2, 'Alojamiento 2', 'Una cama doble, un camarote y un sofá- cama. Baño y terraza. Televisor.', 5, 1, 1),
+(5, 2, 'Alojamiento 3', 'Una cama doble, un camarote y un sofá- cama. Baño y terraza. Televisor.', 5, 1, 1),
+(5, 2, 'Alojamiento Nuevo 1', 'Una habitación que tiene dos camas gemelas y un camarote; baño, terraza - comedor y cocina. Nevera y televisor.', 4, 1, 1),
+(5, 2, 'Alojamiento Nuevo 2', 'Una habitación que tiene dos camas gemelas y un camarote; baño, terraza - comedor y cocina. Nevera y televisor.', 4, 1, 1),
+(5, 2, 'Alojamiento Nuevo 3', 'Una habitación que tiene dos camas gemelas y un camarote; baño, terraza - comedor y cocina. Nevera y televisor.', 4, 1, 1),
+(5, 2, 'Alojamiento Nuevo 4', 'Una habitación que tiene dos camas gemelas y un camarote; baño, terraza - comedor y cocina. Nevera y televisor.', 4, 1, 1),
+(5, 2, 'Alojamiento Nuevo 5', 'Una habitación que tiene dos camas gemelas y un camarote; baño, terraza - comedor y cocina. Nevera y televisor.', 4, 1, 1),
+(5, 2, 'Alojamiento Nuevo 6', 'Una habitación que tiene dos camas gemelas y un camarote; baño, terraza - comedor y cocina. Nevera y televisor.', 4, 1, 1),
+(5, 2, 'Alojamiento Nuevo 7', 'Una habitación que tiene dos camas gemelas y un camarote; baño, terraza - comedor y cocina. Nevera y televisor.', 4, 1, 1),
+(5, 2, 'Alojamiento Nuevo 8', 'Una habitación que tiene dos camas gemelas y un camarote; baño, terraza - comedor y cocina. Nevera y televisor.', 4, 1, 1);
+GO
+
+-- Alojamientos para Federman - Bogotá
+INSERT INTO Alojamiento (SitioId, TipoAlojamientoId, Nombre, Descripcion, CapacidadMaxima, NumeroHabitaciones, Activo) VALUES 
+(6, 1, 'Habitación 1', 'Habitación para alojamiento de asociados.', 2, 1, 1),
+(6, 1, 'Habitación 2', 'Habitación para alojamiento de asociados.', 2, 1, 1),
+(6, 1, 'Habitación 3', 'Habitación para alojamiento de asociados.', 2, 1, 1),
+(6, 1, 'Habitación 4', 'Habitación para alojamiento de asociados.', 2, 1, 1);
+GO
+
+-- Habitaciones para El Placer - Fusagasugá (Alojamiento 1)
+DECLARE @AlojamientoFusaga1 INT;
+SELECT TOP 1 @AlojamientoFusaga1 = Id FROM Alojamiento WHERE SitioId = 2 AND Nombre = 'Alojamiento 1';
+INSERT INTO Habitacion (AlojamientoId, Numero, Descripcion, CapacidadMaxima, Activo) VALUES 
+(@AlojamientoFusaga1, '1', 'Habitación con cama doble y una sencilla', 3, 1),
+(@AlojamientoFusaga1, '2', 'Habitación con una cama sencilla', 2, 1);
+GO
+
+-- Habitaciones para El Placer - Fusagasugá (Alojamiento 2)
+DECLARE @AlojamientoFusaga2 INT;
+SELECT TOP 1 @AlojamientoFusaga2 = Id FROM Alojamiento WHERE SitioId = 2 AND Nombre = 'Alojamiento 2';
+INSERT INTO Habitacion (AlojamientoId, Numero, Descripcion, CapacidadMaxima, Activo) VALUES 
+(@AlojamientoFusaga2, '1', 'Habitación con cama doble', 2, 1),
+(@AlojamientoFusaga2, '2', 'Habitación con 4 camas sencillas', 4, 1);
+GO
+
 -- Temporadas
 INSERT INTO Temporada (TipoTemporadaId, Nombre, FechaInicio, FechaFin, Descripcion, Activo) VALUES 
 (1, 'Baja Temporada 2026', '2026-01-01', '2026-06-15', 'Temporada baja', 1),

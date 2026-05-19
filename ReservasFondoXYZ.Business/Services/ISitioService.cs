@@ -11,4 +11,5 @@ public interface ISitioService
     Task<bool> EliminarAsync(int id);
     Task<List<Alojamiento>> ObtenerAlojamientosPorSitioAsync(int sitioId);
     Task<List<TipoTemporada>> ObtenerTiposTemporadaAsync();
+    Task<List<TipoSitio>> ObtenerTiposSitioAsync();
 }

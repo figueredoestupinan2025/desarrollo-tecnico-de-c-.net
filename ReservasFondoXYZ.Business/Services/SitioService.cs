@@ -67,4 +67,9 @@ public class SitioService : ISitioService
     {
         return await _context.TiposTemporada.ToListAsync();
     }
+
+    public async Task<List<TipoSitio>> ObtenerTiposSitioAsync()
+    {
+        return await _context.TiposSitio.ToListAsync();
+    }
 }
