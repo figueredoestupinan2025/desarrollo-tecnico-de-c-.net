@@ -19,6 +19,7 @@ El proyecto sigue una arquitectura en capas:
 3. **ReservasFondoXYZ.Web** - Capa de Presentación (MVC)
    - Controladores
    - Vistas con Razor
+   - ViewModels separados de los controladores
    - Configuración de Identity para autenticación
 
 ## Tecnologías Utilizadas
@@ -52,6 +53,22 @@ Se implementaron los siguientes procedimientos almacenados:
 3. **ObtenerTarifas**: Consulta tarifas según sitio, temporada, personas y alojamiento
 4. **CalcularTarifaTotal**: Calcula la tarifa total a cancelar
 5. **ObtenerTemporadaPorFecha**: Obtiene el tipo de temporada para una fecha
+
+### Refinamiento de la Condición de Solapamiento de Fechas
+La condición de solapamiento de fechas se ha refinado para manejar correctamente los casos de **mismo día de entrada/salida**:
+```sql
+-- Condición estándar y correcta
+AND (@FechaInicio < r.FechaFin AND @FechaFin > r.FechaInicio)
+```
+Esto permite que una habitación esté disponible si un huésped sale el día X y otro llega el mismo día X.
+
+## Consumo de Procedimientos Almacenados desde C#
+Todos los procedimientos almacenados se consumen desde la capa de negocio usando `FromSqlRaw` y `ExecuteSqlRawAsync`, con parámetros tipados (`SqlParameter`) para prevenir SQL injection:
+- `ObtenerHabitacionesDisponiblesAsync`: Llama a `ObtenerHabitacionesDisponiblesPorFechas`
+- `ObtenerHabitacionesDisponiblesPorPersonasAsync`: Llama a `ObtenerHabitacionesDisponiblesPorFechasYPersonas`
+- `ObtenerTarifasAsync`: Llama a `ObtenerTarifas`
+- `CalcularTarifaTotalAsync`: Llama a `CalcularTarifaTotal` con parámetro OUTPUT
+- `ObtenerTipoTemporadaPorFechaAsync`: Llama a `ObtenerTemporadaPorFecha` con parámetro OUTPUT
 
 ## Instrucciones de Instalación y Ejecución
 
@@ -99,14 +116,16 @@ Para habilitar la recuperación de contraseña por correo electrónico, edita la
 - **Registro y Autenticación de Usuarios**: Mediante ASP.NET Core Identity
 - **Consulta de Disponibilidad**: Buscar habitaciones disponibles por fechas y número de personas
 - **Gestión de Reservas**: Crear, ver y consultar reservas
+- **Recuperación de Contraseña**: Mediante SMTP
+- **CRUD de Sitios**: Gestión completa de sitios recreativos y apartamentos
 - **Página Principal**: Lista de sedes recreativas y apartamentos con pestañas
 
 ## Datos Iniciales
 La base de datos se crea con los siguientes datos de ejemplo:
 - 8 sitios (6 sedes recreativas y 2 apartamentos)
-- Alojamientos y habitaciones para Villeta, Medellín y Santa Marta
+- Alojamientos y habitaciones para TODOS los sitios: Villeta, El Placer (Fusagasugá), Gonzalo Morante (Chinchiná), Tablones (Palmira), Manguruma (Santa Fe de Antioquia), Federman (Bogotá), Suramericana (Medellín) y El Rodadero (Santa Marta)
 - Temporadas para 2026
-- Tarifas según la información proporcionada
+- Tarifas para TODOS los sitios según la información proporcionada
 
 ## Autor
 Prueba técnica desarrollada para el cargo de Desarrollador de Aplicaciones en Microsoft .NET.
