@@ -1,0 +1,52 @@
+@model IEnumerable<ReservasFondoXYZ.Data.Models.Reserva>
+
+@{
+    ViewData["Title"] = "Mis Reservas";
+}
+
+<h1 class="mb-4">Mis Reservas</h1>
+
+@if (Model != null && Model.Any())
+{
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Sitio</th>
+                    <th>Alojamiento</th>
+                    <th>Fechas</th>
+                    <th>Personas</th>
+                    <th>Tarifa Total</th>
+                    <th>Estado</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var reserva in Model)
+                {
+                    <tr>
+                        <td>@reserva.Id</td>
+                        <td>@reserva.Sitio?.Nombre</td>
+                        <td>@reserva.Alojamiento?.Nombre</td>
+                        <td>@reserva.FechaInicio.ToString("dd/MM/yyyy") - @reserva.FechaFin.ToString("dd/MM/yyyy")</td>
+                        <td>@reserva.NumeroPersonas</td>
+                        <td>$@reserva.TarifaTotal.ToString("N0")</td>
+                        <td>@reserva.EstadoReserva?.Nombre</td>
+                        <td>
+                            <a asp-action="Detalles" asp-route-id="@reserva.Id" class="btn btn-sm btn-info">Detalles</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="alert alert-info">No tienes reservas registradas.</div>
+}
+
+<div class="mt-3">
+    <a asp-action="Disponibilidad" class="btn btn-primary">Nueva Reserva</a>
+</div>

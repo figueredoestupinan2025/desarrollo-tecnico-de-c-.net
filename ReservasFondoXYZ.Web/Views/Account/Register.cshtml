@@ -1,0 +1,94 @@
+@model ReservasFondoXYZ.Web.Controllers.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Registrarse - Reservas FODUN";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card login-card">
+                <div class="card-header bg-fodun text-center py-4">
+                    <div class="d-flex align-items-center justify-content-center">
+                        <div class="fodun-logo me-3">
+                            <div class="logo-circle d-flex align-items-center justify-content-center">
+                                <span class="logo-text">FODUN</span>
+                            </div>
+                        </div>
+                        <div class="header-title text-start">
+                            <h2 class="text-white m-0 fw-bold">SISTEMA DE RESERVAS</h2>
+                            <p class="text-white m-0">Registro de Usuarios</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body p-4">
+                    <form asp-action="Register" method="post">
+                        <div asp-validation-summary="All" class="text-danger mb-3"></div>
+                        <input type="hidden" asp-for="ReturnUrl" />
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Nombre" class="form-label fw-bold">Nombre:</label>
+                                <input asp-for="Nombre" class="form-control" placeholder="Ingrese su nombre">
+                                <span asp-validation-for="Nombre" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Apellido" class="form-label fw-bold">Apellido:</label>
+                                <input asp-for="Apellido" class="form-control" placeholder="Ingrese su apellido">
+                                <span asp-validation-for="Apellido" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="NroDocumento" class="form-label fw-bold">Nro Documento:</label>
+                            <input asp-for="NroDocumento" class="form-control" placeholder="Ingrese su número de documento">
+                            <span asp-validation-for="NroDocumento" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label fw-bold">Correo Electrónico:</label>
+                            <input asp-for="Email" class="form-control" placeholder="Ingrese su correo electrónico">
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Telefono" class="form-label fw-bold">Teléfono:</label>
+                            <input asp-for="Telefono" class="form-control" placeholder="Ingrese su teléfono">
+                            <span asp-validation-for="Telefono" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Clave" class="form-label fw-bold">Clave:</label>
+                            <input asp-for="Clave" class="form-control" placeholder="Ingrese su clave">
+                            <span asp-validation-for="Clave" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="ConfirmarClave" class="form-label fw-bold">Confirmar Clave:</label>
+                            <input asp-for="ConfirmarClave" class="form-control" placeholder="Confirme su clave">
+                            <span asp-validation-for="ConfirmarClave" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-danger btn-lg fw-bold">Registrarse</button>
+                        </div>
+                    </form>
+
+                    <div class="mt-4 text-center">
+                        <p class="mb-0">¿Ya tienes cuenta? <a asp-action="Login" class="text-danger fw-bold">Iniciar Sesión</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="text-center mt-5 text-muted">
+    <p class="mb-0">Reservas - FODUN - Se recomienda utilizar Internet Explorer 9.0, Chrome, Firefox en una resolución de 1024 x 768 o superior - Derechos Reservados © 2026</p>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

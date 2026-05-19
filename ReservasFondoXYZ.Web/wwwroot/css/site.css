@@ -1,0 +1,165 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+body {
+  background-color: #f5f5f5;
+  font-family: Arial, sans-serif;
+}
+
+.bg-fodun {
+  background: linear-gradient(90deg, #c8102e 0%, #dc3545 50%, #c8102e 100%);
+  border-bottom: 3px solid #9a0c1f;
+}
+
+.fodun-logo .logo-circle {
+  width: 80px;
+  height: 80px;
+  background-color: white;
+  border-radius: 50%;
+  border: 3px solid #c8102e;
+}
+
+.fodun-logo .logo-text {
+  color: #c8102e;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.header-title h1 {
+  font-size: 1.8rem;
+}
+
+.header-title p {
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #c8102e;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.navbar-brand {
+  font-weight: bold;
+}
+
+.btn-danger {
+  background-color: #c8102e;
+  border-color: #c8102e;
+}
+
+.btn-danger:hover {
+  background-color: #9a0c1f;
+  border-color: #8a0a1a;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
+  border-color: #545b62;
+}
+
+.nav-tabs .nav-link {
+  background-color: #f8f9fa;
+  color: #333;
+  border: 1px solid #dee2e6;
+  margin-right: 5px;
+}
+
+.nav-tabs .nav-link.active {
+  color: white;
+  background-color: #c8102e;
+  border-color: #c8102e;
+}
+
+.nav-tabs .nav-link:hover {
+  border-color: #f5c6cb;
+}
+
+.card {
+  border: 1px solid #dee2e6;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.card-title {
+  color: #c8102e;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.card-subtitle {
+  font-size: 0.9rem;
+}
+
+.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
+  color: var(--bs-secondary-color);
+  text-align: end;
+}
+
+.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
+  text-align: start;
+}
+
+.sitio-card {
+  border-radius: 0;
+}
+
+.sitio-card .card-body {
+  padding: 1rem;
+}
+
+.sitio-imagen {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border: 1px solid #dee2e6;
+}
+
+.login-card {
+  border: none;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  border-radius: 8px;
+}
+
+.login-card .card-header {
+  border-radius: 8px 8px 0 0 !important;
+}
+
+.login-card .card-body {
+  background-color: #f8f9fa;
+  border-radius: 0 0 8px 8px;
+}
+
+.form-label {
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.form-control {
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+}
+
+.form-control:focus {
+  border-color: #c8102e;
+  box-shadow: 0 0 0 0.2rem rgba(200, 16, 46, 0.25);
+}

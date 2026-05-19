@@ -1,0 +1,75 @@
+@model IEnumerable<ReservasFondoXYZ.Data.Dtos.HabitacionDisponibleDto>
+
+@{
+    ViewData["Title"] = "Consulta de Disponibilidad";
+}
+
+<h1 class="mb-4">Consulta de Disponibilidad</h1>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="post" class="row g-3">
+            <div class="col-md-3">
+                <label class="form-label">Fecha de Inicio</label>
+                <input type="date" name="fechaInicio" class="form-control" value="@ViewBag.FechaInicio?.ToString("yyyy-MM-dd")" required>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Fecha de Fin</label>
+                <input type="date" name="fechaFin" class="form-control" value="@ViewBag.FechaFin?.ToString("yyyy-MM-dd")" required>
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">Número de Personas</label>
+                <input type="number" name="numeroPersonas" class="form-control" min="1" value="@ViewBag.NumeroPersonas" required>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Sitio (Opcional)</label>
+                <select name="sitioId" class="form-select">
+                    <option value="">Todos los sitios</option>
+                    @foreach (var sitio in ViewBag.Sitios)
+                    {
+                        <option value="@sitio.Id">@sitio.Nombre</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-1 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary w-100">Consultar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@if (Model != null && Model.Any())
+{
+    <h2 class="mb-3">Resultados de Disponibilidad</h2>
+    
+    <div class="row">
+        @foreach (var habitacion in Model)
+        {
+            <div class="col-md-4 mb-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">@habitacion.SitioNombre</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">@habitacion.AlojamientoNombre - Habitación @habitacion.Numero</h6>
+                        <p class="card-text">
+                            <strong>Tipo:</strong> @habitacion.TipoSitio<br>
+                            <strong>Capacidad Máxima:</strong> @habitacion.CapacidadMaxima personas
+                            @if (!string.IsNullOrEmpty(habitacion.Descripcion))
+                            {
+                                <br><small>@habitacion.Descripcion</small>
+                            }
+                        </p>
+                        <a asp-action="Crear" asp-route-sitioId="@habitacion.SitioId" asp-route-alojamientoId="@habitacion.AlojamientoId"
+                           asp-route-fechaInicio="@ViewBag.FechaInicio?.ToString("yyyy-MM-dd")"
+                           asp-route-fechaFin="@ViewBag.FechaFin?.ToString("yyyy-MM-dd")"
+                           asp-route-numeroPersonas="@ViewBag.NumeroPersonas"
+                           class="btn btn-success">Reservar</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else if (ViewBag.FechaInicio != null)
+{
+    <div class="alert alert-info">No hay habitaciones disponibles para las fechas y condiciones seleccionadas.</div>
+}

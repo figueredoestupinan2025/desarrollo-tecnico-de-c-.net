@@ -1,0 +1,176 @@
+@{
+    ViewData["Title"] = "Sistema de Reservas - FODUN";
+}
+
+<div class="mb-4">
+    <ul class="nav nav-tabs mb-3" id="sitiosTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="sedes-tab" data-bs-toggle="tab" data-bs-target="#sedes" type="button" role="tab" aria-controls="sedes" aria-selected="true">Sedes Recreativas y Apartamentos</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="seleccion-tab" data-bs-toggle="tab" data-bs-target="#seleccion" type="button" role="tab" aria-controls="seleccion" aria-selected="false">Seleccione una Sede</button>
+        </li>
+    </ul>
+    
+    <div class="tab-content" id="sitiosTabContent">
+        <div class="tab-pane fade show active" id="sedes" role="tabpanel" aria-labelledby="sedes-tab">
+            <table class="table table-bordered bg-white mb-0">
+                <tbody>
+                    <tr>
+                        <td class="p-3" style="width: 50%;">
+                            <div class="d-flex">
+                                <div class="me-3">
+                                    <img src="https://coreva-normal.trae.ai/api/ide/v1/text_to_image?prompt=Sede%20recreativa%20Villeta%20Cundinamarca%20colombia&image_size=square" class="sitio-imagen" alt="Villeta" style="width: 100px; height: 100px;">
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h6 class="card-title mb-1 fw-bold text-danger">Sede Recreativa Villeta</h6>
+                                    <p class="mb-1"><small>Ubicación: Villeta, Cundinamarca</small></p>
+                                    <p class="mb-2"><small>Sede Recreativa</small></p>
+                                    <div class="d-flex gap-2">
+                                        <a asp-controller="Reserva" asp-action="Disponibilidad" asp-route-sitioId="1" class="btn btn-danger btn-sm fw-bold" style="font-size: 0.8rem;">Consultar Disponibilidad</a>
+                                        <a asp-controller="Home" asp-action="Ver" asp-route-id="1" class="btn btn-secondary btn-sm fw-bold" style="font-size: 0.8rem;">Ver</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="p-3" style="width: 50%;">
+                            <div class="d-flex">
+                                <div class="me-3">
+                                    <img src="https://coreva-normal.trae.ai/api/ide/v1/text_to_image?prompt=Sede%20recreativa%20Fusagasuga%20colombia&image_size=square" class="sitio-imagen" alt="Fusagasugá" style="width: 100px; height: 100px;">
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h6 class="card-title mb-1 fw-bold text-danger">Sede Recreativa El Placer</h6>
+                                    <p class="mb-1"><small>Ubicación: Fusagasugá, Cundinamarca</small></p>
+                                    <p class="mb-2"><small>Sede Recreativa</small></p>
+                                    <div class="d-flex gap-2">
+                                        <a asp-controller="Reserva" asp-action="Disponibilidad" asp-route-sitioId="2" class="btn btn-danger btn-sm fw-bold" style="font-size: 0.8rem;">Consultar Disponibilidad</a>
+                                        <a asp-controller="Home" asp-action="Ver" asp-route-id="2" class="btn btn-secondary btn-sm fw-bold" style="font-size: 0.8rem;">Ver</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="p-3">
+                            <div class="d-flex">
+                                <div class="me-3">
+                                    <img src="https://coreva-normal.trae.ai/api/ide/v1/text_to_image?prompt=Sede%20recreativa%20chinchina%20caldas%20colombia&image_size=square" class="sitio-imagen" alt="Chinchiná" style="width: 100px; height: 100px;">
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h6 class="card-title mb-1 fw-bold text-danger">Sede Recreativa Gonzalo Morante</h6>
+                                    <p class="mb-1"><small>Ubicación: Chinchiná, Caldas</small></p>
+                                    <p class="mb-2"><small>Sede Recreativa</small></p>
+                                    <div class="d-flex gap-2">
+                                        <a asp-controller="Reserva" asp-action="Disponibilidad" asp-route-sitioId="3" class="btn btn-danger btn-sm fw-bold" style="font-size: 0.8rem;">Consultar Disponibilidad</a>
+                                        <a asp-controller="Home" asp-action="Ver" asp-route-id="3" class="btn btn-secondary btn-sm fw-bold" style="font-size: 0.8rem;">Ver</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="p-3">
+                            <div class="d-flex">
+                                <div class="me-3">
+                                    <img src="https://coreva-normal.trae.ai/api/ide/v1/text_to_image?prompt=Sede%20recreativa%20palmira%20valle%20colombia&image_size=square" class="sitio-imagen" alt="Palmira" style="width: 100px; height: 100px;">
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h6 class="card-title mb-1 fw-bold text-danger">Sede Recreativa Tablones</h6>
+                                    <p class="mb-1"><small>Ubicación: Palmira, Valle del Cauca</small></p>
+                                    <p class="mb-2"><small>Sede Recreativa</small></p>
+                                    <div class="d-flex gap-2">
+                                        <a asp-controller="Reserva" asp-action="Disponibilidad" asp-route-sitioId="4" class="btn btn-danger btn-sm fw-bold" style="font-size: 0.8rem;">Consultar Disponibilidad</a>
+                                        <a asp-controller="Home" asp-action="Ver" asp-route-id="4" class="btn btn-secondary btn-sm fw-bold" style="font-size: 0.8rem;">Ver</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="p-3">
+                            <div class="d-flex">
+                                <div class="me-3">
+                                    <img src="https://coreva-normal.trae.ai/api/ide/v1/text_to_image?prompt=Sede%20recreativa%20santa%20fe%20de%20antioquia%20colombia&image_size=square" class="sitio-imagen" alt="Santa Fe de Antioquia" style="width: 100px; height: 100px;">
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h6 class="card-title mb-1 fw-bold text-danger">Sede Recreativa Manguruma</h6>
+                                    <p class="mb-1"><small>Ubicación: Santa Fe de Antioquia</small></p>
+                                    <p class="mb-2"><small>Sede Recreativa</small></p>
+                                    <div class="d-flex gap-2">
+                                        <a asp-controller="Reserva" asp-action="Disponibilidad" asp-route-sitioId="5" class="btn btn-danger btn-sm fw-bold" style="font-size: 0.8rem;">Consultar Disponibilidad</a>
+                                        <a asp-controller="Home" asp-action="Ver" asp-route-id="5" class="btn btn-secondary btn-sm fw-bold" style="font-size: 0.8rem;">Ver</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="p-3">
+                            <div class="d-flex">
+                                <div class="me-3">
+                                    <img src="https://coreva-normal.trae.ai/api/ide/v1/text_to_image?prompt=Sede%20recreativa%20bogota%20colombia&image_size=square" class="sitio-imagen" alt="Bogotá" style="width: 100px; height: 100px;">
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h6 class="card-title mb-1 fw-bold text-danger">Sede Recreativa Federman</h6>
+                                    <p class="mb-1"><small>Ubicación: Bogotá, D.C.</small></p>
+                                    <p class="mb-2"><small>Sede Recreativa</small></p>
+                                    <div class="d-flex gap-2">
+                                        <a asp-controller="Reserva" asp-action="Disponibilidad" asp-route-sitioId="6" class="btn btn-danger btn-sm fw-bold" style="font-size: 0.8rem;">Consultar Disponibilidad</a>
+                                        <a asp-controller="Home" asp-action="Ver" asp-route-id="6" class="btn btn-secondary btn-sm fw-bold" style="font-size: 0.8rem;">Ver</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <table class="table table-bordered bg-white">
+                <tbody>
+                    <tr>
+                        <td class="p-3" style="width: 50%;">
+                            <div class="d-flex">
+                                <div class="me-3">
+                                    <img src="https://coreva-normal.trae.ai/api/ide/v1/text_to_image?prompt=Apartamento%20suramericana%20medellin%20colombia&image_size=square" class="sitio-imagen" alt="Medellín" style="width: 100px; height: 100px;">
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h6 class="card-title mb-1 fw-bold text-danger">Edificio Suramericana</h6>
+                                    <p class="mb-1"><small>Ubicación: Medellín, Antioquia</small></p>
+                                    <p class="mb-2"><small>Apartamentos</small></p>
+                                    <div class="d-flex gap-2">
+                                        <a asp-controller="Reserva" asp-action="Disponibilidad" asp-route-sitioId="7" class="btn btn-danger btn-sm fw-bold" style="font-size: 0.8rem;">Consultar Disponibilidad</a>
+                                        <a asp-controller="Home" asp-action="Ver" asp-route-id="7" class="btn btn-secondary btn-sm fw-bold" style="font-size: 0.8rem;">Ver</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="p-3" style="width: 50%;">
+                            <div class="d-flex">
+                                <div class="me-3">
+                                    <img src="https://coreva-normal.trae.ai/api/ide/v1/text_to_image?prompt=Apartamento%20el%20rodadero%20santa%20marta%20colombia&image_size=square" class="sitio-imagen" alt="Santa Marta" style="width: 100px; height: 100px;">
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h6 class="card-title mb-1 fw-bold text-danger">Edificio El Rodadero</h6>
+                                    <p class="mb-1"><small>Ubicación: Santa Marta, Magdalena</small></p>
+                                    <p class="mb-2"><small>Apartamentos</small></p>
+                                    <div class="d-flex gap-2">
+                                        <a asp-controller="Reserva" asp-action="Disponibilidad" asp-route-sitioId="8" class="btn btn-danger btn-sm fw-bold" style="font-size: 0.8rem;">Consultar Disponibilidad</a>
+                                        <a asp-controller="Home" asp-action="Ver" asp-route-id="8" class="btn btn-secondary btn-sm fw-bold" style="font-size: 0.8rem;">Ver</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="tab-pane fade" id="seleccion" role="tabpanel" aria-labelledby="seleccion-tab">
+            <div class="alert alert-info">
+                Seleccione una sede desde la pestaña "Sedes Recreativas y Apartamentos"
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="border-top footer text-muted mt-4 py-3 bg-white">
+    <div class="container-fluid text-center">
+        <p class="mb-0" style="font-size: 0.8rem;">FODUN. Todos los derechos reservados. Diseño: Visual Studio, Versión 1.0.1</p>
+    </div>
+</footer>

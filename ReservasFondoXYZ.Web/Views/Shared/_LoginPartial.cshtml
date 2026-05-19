@@ -1,0 +1,26 @@
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ReservasFondoXYZ.Data.Models.ApplicationUser> SignInManager
+@inject UserManager<ReservasFondoXYZ.Data.Models.ApplicationUser> UserManager
+
+<ul class="navbar-nav">
+@if (SignInManager.IsSignedIn(User))
+{
+    <li class="nav-item">
+        <a class="nav-link text-dark fw-bold" asp-controller="Reserva" asp-action="MisReservas">Bienvenido, @User.Identity?.Name!</a>
+    </li>
+    <li class="nav-item">
+        <form class="form-inline" asp-controller="Account" asp-action="Logout" asp-route-returnUrl="@Url.Action("Index", "Home")">
+            <button type="submit" class="nav-link btn btn-link text-dark fw-bold">Cerrar Sesión</button>
+        </form>
+    </li>
+}
+else
+{
+    <li class="nav-item">
+        <a class="nav-link text-dark fw-bold" asp-controller="Account" asp-action="Register">Registrarse</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark fw-bold" asp-controller="Account" asp-action="Login">Iniciar Sesión</a>
+    </li>
+}
+</ul>

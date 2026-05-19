@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - FODUN</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/ReservasFondoXYZ.Web.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header class="bg-fodun">
+        <div class="container-fluid py-2">
+            <div class="row align-items-center">
+                <div class="col-auto">
+                    <div class="fodun-logo">
+                        <div class="logo-circle d-flex align-items-center justify-content-center">
+                            <span class="logo-text">FODUN</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="header-title ms-3">
+                        <h1 class="text-white m-0 fw-bold" style="font-size: 1.5rem;">SISTEMA DE RESERVAS</h1>
+                        <p class="text-white m-0" style="font-size: 0.9rem;">Sedes Recreativas y Apartamentos</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom py-1">
+        <div class="container-fluid">
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark fw-bold" style="font-size: 0.85rem;" asp-area="" asp-controller="Home" asp-action="Index">Sedes Recreativas y Apartamentos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" style="font-size: 0.85rem;" asp-area="" asp-controller="Reserva" asp-action="MisReservas">Regresar</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted mt-5">
+        <div class="container py-3">
+            <p class="mb-0 text-center">FODUN. Todos los derechos reservados. Diseño: Visual Studio, Versión 1.0.1</p>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
