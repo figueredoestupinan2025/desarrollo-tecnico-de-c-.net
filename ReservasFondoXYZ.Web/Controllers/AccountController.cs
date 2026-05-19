@@ -149,7 +149,7 @@ public class AccountController : Controller
             var callbackUrl = Url.Action(nameof(ResetPassword), "Account", new { token, email = user.Email }, protocol: Request.Scheme);
 
             await _emailService.SendEmailAsync(
-                to: user.Email,
+                toEmail: user.Email,
                 subject: "Restablecer Contraseña - Fondo XYZ",
                 message: $"Por favor restablece tu contraseña haciendo clic <a href='{callbackUrl}'>aquí</a>.");
 
