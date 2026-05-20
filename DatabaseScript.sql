@@ -418,20 +418,70 @@ INSERT INTO Alojamiento (SitioId, TipoAlojamientoId, Nombre, Descripcion, Capaci
 (6, 1, 'Habitación 4', 'Habitación para alojamiento de asociados.', 2, 1, 1);
 GO
 
--- Habitaciones para El Placer - Fusagasugá (Alojamiento 1)
-DECLARE @AlojamientoFusaga1 INT;
-SELECT TOP 1 @AlojamientoFusaga1 = Id FROM Alojamiento WHERE SitioId = 2 AND Nombre = 'Alojamiento 1';
+-- Habitaciones para El Placer - Fusagasugá
+DECLARE @AlojamientoFusaga INT;
+SELECT TOP 1 @AlojamientoFusaga = Id FROM Alojamiento WHERE SitioId = 2;
 INSERT INTO Habitacion (AlojamientoId, Numero, Descripcion, CapacidadMaxima, Activo) VALUES 
-(@AlojamientoFusaga1, '1', 'Habitación con cama doble y una sencilla', 3, 1),
-(@AlojamientoFusaga1, '2', 'Habitación con una cama sencilla', 2, 1);
+(@AlojamientoFusaga, '101', 'Habitación con 4 personas', 4, 1),
+(@AlojamientoFusaga, '102', 'Habitación con 4 personas', 4, 1),
+(@AlojamientoFusaga, '103', 'Habitación con 4 personas', 4, 1),
+(@AlojamientoFusaga, '104', 'Habitación con 4 personas', 4, 1),
+(@AlojamientoFusaga, '105', 'Habitación con 4 personas', 4, 1),
+(@AlojamientoFusaga, '106', 'Habitación con 4 personas', 4, 1),
+(@AlojamientoFusaga, '107', 'Habitación con 4 personas', 4, 1),
+(@AlojamientoFusaga, '108', 'Habitación con 4 personas', 4, 1);
 GO
 
--- Habitaciones para El Placer - Fusagasugá (Alojamiento 2)
-DECLARE @AlojamientoFusaga2 INT;
-SELECT TOP 1 @AlojamientoFusaga2 = Id FROM Alojamiento WHERE SitioId = 2 AND Nombre = 'Alojamiento 2';
+-- Habitaciones para Gonzalo Morante - Chinchiná
+DECLARE @AlojamientoChinchina INT;
+SELECT TOP 1 @AlojamientoChinchina = Id FROM Alojamiento WHERE SitioId = 3;
 INSERT INTO Habitacion (AlojamientoId, Numero, Descripcion, CapacidadMaxima, Activo) VALUES 
-(@AlojamientoFusaga2, '1', 'Habitación con cama doble', 2, 1),
-(@AlojamientoFusaga2, '2', 'Habitación con 4 camas sencillas', 4, 1);
+(@AlojamientoChinchina, '201', 'Habitación con 4 personas', 4, 1),
+(@AlojamientoChinchina, '202', 'Habitación con 4 personas', 4, 1),
+(@AlojamientoChinchina, '203', 'Habitación con 4 personas', 4, 1),
+(@AlojamientoChinchina, '204', 'Habitación con 4 personas', 4, 1),
+(@AlojamientoChinchina, '205', 'Habitación con 4 personas', 4, 1),
+(@AlojamientoChinchina, '206', 'Habitación con 4 personas', 4, 1),
+(@AlojamientoChinchina, '207', 'Habitación con 4 personas', 4, 1);
+GO
+
+-- Habitaciones para Tablones - Palmira
+DECLARE @AlojamientoPalmira INT;
+SELECT TOP 1 @AlojamientoPalmira = Id FROM Alojamiento WHERE SitioId = 4;
+INSERT INTO Habitacion (AlojamientoId, Numero, Descripcion, CapacidadMaxima, Activo) VALUES 
+(@AlojamientoPalmira, '301', 'Habitación con 4 personas', 4, 1),
+(@AlojamientoPalmira, '302', 'Habitación con 4 personas', 4, 1),
+(@AlojamientoPalmira, '303', 'Habitación con 4 personas', 4, 1),
+(@AlojamientoPalmira, '304', 'Habitación con 4 personas', 4, 1),
+(@AlojamientoPalmira, '305', 'Habitación con 4 personas', 4, 1),
+(@AlojamientoPalmira, '306', 'Habitación con 4 personas', 4, 1);
+GO
+
+-- Habitaciones para Manguruma - Santa Fe de Antioquia
+DECLARE @AlojamientoManguruma INT;
+SELECT TOP 1 @AlojamientoManguruma = Id FROM Alojamiento WHERE SitioId = 5;
+INSERT INTO Habitacion (AlojamientoId, Numero, Descripcion, CapacidadMaxima, Activo) VALUES 
+(@AlojamientoManguruma, '401', 'Habitación con 4 personas', 4, 1),
+(@AlojamientoManguruma, '402', 'Habitación con 4 personas', 4, 1),
+(@AlojamientoManguruma, '403', 'Habitación con 4 personas', 4, 1),
+(@AlojamientoManguruma, '404', 'Habitación con 4 personas', 4, 1),
+(@AlojamientoManguruma, '405', 'Habitación con 4 personas', 4, 1),
+(@AlojamientoManguruma, '406', 'Habitación con 4 personas', 4, 1),
+(@AlojamientoManguruma, '407', 'Habitación con 4 personas', 4, 1),
+(@AlojamientoManguruma, '408', 'Habitación con 4 personas', 4, 1),
+(@AlojamientoManguruma, '409', 'Habitación con 4 personas', 4, 1),
+(@AlojamientoManguruma, '410', 'Habitación con 4 personas', 4, 1),
+(@AlojamientoManguruma, '411', 'Habitación con 4 personas', 4, 1);
+GO
+
+-- Habitaciones para Federman - Bogotá
+DECLARE @AlojamientoFederman INT;
+SELECT TOP 1 @AlojamientoFederman = Id FROM Alojamiento WHERE SitioId = 6;
+INSERT INTO Habitacion (AlojamientoId, Numero, Descripcion, CapacidadMaxima, Activo) VALUES 
+(@AlojamientoFederman, '1', 'Habitación 1 con 2 camas sencillas', 2, 1),
+(@AlojamientoFederman, '2', 'Habitación 2 con 2 camas sencillas', 2, 1),
+(@AlojamientoFederman, '3', 'Habitación 3 con 2 camas sencillas', 2, 1),
+(@AlojamientoFederman, '4', 'Habitación 4 con 2 camas sencillas', 2, 1);
 GO
 
 -- Temporadas
