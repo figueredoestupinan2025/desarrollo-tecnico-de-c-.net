@@ -1,4 +1,4 @@
-@model IEnumerable<ReservasFondoXYZ.Data.Dtos.HabitacionDisponibleDto>
+@model ReservasFondoXYZ.Web.ViewModels.DisponibilidadViewModel
 
 @{
     ViewData["Title"] = "Consulta de Disponibilidad";
@@ -8,22 +8,27 @@
 
 <div class="card mb-4">
     <div class="card-body">
-        <form method="post" class="row g-3">
+        <form method="post" class="row g-3" asp-action="Disponibilidad">
+            <div asp-validation-summary="All" class="text-danger col-12"></div>
+
             <div class="col-md-3">
-                <label class="form-label">Fecha de Inicio</label>
-                <input type="date" name="fechaInicio" class="form-control" value="@ViewBag.FechaInicio?.ToString("yyyy-MM-dd")" required>
+                <label asp-for="FechaInicio" class="form-label">Fecha de Inicio</label>
+                <input asp-for="FechaInicio" type="date" class="form-control" required>
+                <span asp-validation-for="FechaInicio" class="text-danger"></span>
             </div>
             <div class="col-md-3">
-                <label class="form-label">Fecha de Fin</label>
-                <input type="date" name="fechaFin" class="form-control" value="@ViewBag.FechaFin?.ToString("yyyy-MM-dd")" required>
+                <label asp-for="FechaFin" class="form-label">Fecha de Fin</label>
+                <input asp-for="FechaFin" type="date" class="form-control" required>
+                <span asp-validation-for="FechaFin" class="text-danger"></span>
             </div>
             <div class="col-md-2">
-                <label class="form-label">Número de Personas</label>
-                <input type="number" name="numeroPersonas" class="form-control" min="1" value="@ViewBag.NumeroPersonas" required>
+                <label asp-for="NumeroPersonas" class="form-label">Número de Personas</label>
+                <input asp-for="NumeroPersonas" type="number" class="form-control" min="1" max="20" required>
+                <span asp-validation-for="NumeroPersonas" class="text-danger"></span>
             </div>
             <div class="col-md-3">
-                <label class="form-label">Sitio (Opcional)</label>
-                <select name="sitioId" class="form-select">
+                <label asp-for="SitioId" class="form-label">Sitio (Opcional)</label>
+                <select asp-for="SitioId" class="form-select">
                     <option value="">Todos los sitios</option>
                     @foreach (var sitio in ViewBag.Sitios)
                     {
@@ -38,12 +43,16 @@
     </div>
 </div>
 
-@if (Model != null && Model.Any())
+@{
+    var habitaciones = ViewBag.Habitaciones as IEnumerable<ReservasFondoXYZ.Data.Dtos.HabitacionDisponibleDto>;
+}
+
+@if (habitaciones != null && habitaciones.Any())
 {
     <h2 class="mb-3">Resultados de Disponibilidad</h2>
     
     <div class="row">
-        @foreach (var habitacion in Model)
+        @foreach (var habitacion in habitaciones)
         {
             <div class="col-md-4 mb-3">
                 <div class="card h-100">

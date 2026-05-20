@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ReservasFondoXYZ.Business.Services;
 using ReservasFondoXYZ.Data.Models;
+using ReservasFondoXYZ.Web.ViewModels;
 
 namespace ReservasFondoXYZ.Web.Controllers;
 
@@ -25,32 +26,39 @@ public class ReservaController : Controller
     {
         ViewBag.Sitios = await _sitioService.ObtenerTodosAsync();
         ViewBag.TiposTemporada = await _sitioService.ObtenerTiposTemporadaAsync();
-        return View();
+        return View(new DisponibilidadViewModel());
     }
 
     [HttpPost]
-    public async Task<IActionResult> Disponibilidad(DateTime fechaInicio, DateTime fechaFin, int numeroPersonas, int? sitioId = null)
+    public async Task<IActionResult> Disponibilidad(DisponibilidadViewModel model)
     {
         ViewBag.Sitios = await _sitioService.ObtenerTodosAsync();
         ViewBag.TiposTemporada = await _sitioService.ObtenerTiposTemporadaAsync();
-        ViewBag.FechaInicio = fechaInicio;
-        ViewBag.FechaFin = fechaFin;
-        ViewBag.NumeroPersonas = numeroPersonas;
 
-        if (fechaInicio >= fechaFin)
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
+        if (model.FechaInicio >= model.FechaFin)
         {
             ModelState.AddModelError("", "La fecha de inicio debe ser anterior a la fecha de fin.");
-            return View();
+            return View(model);
         }
 
-        var habitaciones = await _reservaService.ObtenerHabitacionesDisponiblesPorPersonasAsync(fechaInicio, fechaFin, numeroPersonas);
+        var habitaciones = await _reservaService.ObtenerHabitacionesDisponiblesPorPersonasAsync(model.FechaInicio, model.FechaFin, model.NumeroPersonas);
 
-        if (sitioId.HasValue)
+        if (model.SitioId.HasValue)
         {
-            habitaciones = habitaciones.Where(h => h.SitioId == sitioId.Value).ToList();
+            habitaciones = habitaciones.Where(h => h.SitioId == model.SitioId.Value).ToList();
         }
 
-        return View(habitaciones);
+        ViewBag.Habitaciones = habitaciones;
+        ViewBag.FechaInicio = model.FechaInicio;
+        ViewBag.FechaFin = model.FechaFin;
+        ViewBag.NumeroPersonas = model.NumeroPersonas;
+
+        return View(model);
     }
 
     [HttpGet]
@@ -75,6 +83,12 @@ public class ReservaController : Controller
         }
 
         var tiposTemporada = await _sitioService.ObtenerTiposTemporadaAsync();
+        if (!tiposTemporada.Any())
+        {
+            ModelState.AddModelError("", "No hay temporadas configuradas en la base de datos.");
+            return RedirectToAction(nameof(Disponibilidad));
+        }
+
         var tarifas = await _reservaService.ObtenerTarifasAsync(sitioId, tiposTemporada.First().Id, numeroPersonas, alojamientoId);
 
         var reserva = new Reserva
