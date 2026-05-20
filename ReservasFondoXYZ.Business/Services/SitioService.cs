@@ -25,7 +25,7 @@ public class SitioService : ISitioService
     {
         return await _context.Sitios
             .Include(s => s.TipoSitio)
-            .Include(s => s.Alojamientos)
+            .Include(s => s.Alojamientos).ThenInclude(a => a.TipoAlojamiento)
             .FirstOrDefaultAsync(s => s.Id == id && s.Activo);
     }
 

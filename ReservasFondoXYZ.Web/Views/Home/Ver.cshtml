@@ -1,5 +1,7 @@
+@model ReservasFondoXYZ.Data.Models.Sitio
+
 @{
-    ViewData["Title"] = "Ver Detalle - FODUN";
+    ViewData["Title"] = "Detalle de " + Model.Nombre + " - FODUN";
 }
 
 <div class="container mt-4">
@@ -8,21 +10,55 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a asp-action="Index">Sedes Recreativas y Apartamentos</a></li>
-                    <li class="breadcrumb-item active">Ver Detalle</li>
+                    <li class="breadcrumb-item active">@Model.Nombre</li>
                 </ol>
             </nav>
         </div>
     </div>
     
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="card mb-4">
                 <div class="card-body">
-                    <h4 class="card-title text-danger fw-bold mb-4">Detalle del Sitio</h4>
-                    <div class="alert alert-info">
-                        <p class="mb-0">Aquí se mostraría el detalle completo del sitio seleccionado (ID: @ViewBag.SitioId)</p>
+                    <h2 class="card-title text-danger fw-bold mb-4">@Model.Nombre</h2>
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <p><strong>Ubicación:</strong> @Model.Ubicacion</p>
+                            <p><strong>Capacidad Total:</strong> @Model.CapacidadTotal personas</p>
+                            <p><strong>Tipo:</strong> @Model.TipoSitio?.Nombre</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Descripción:</strong></p>
+                            <p>@Model.Descripcion</p>
+                        </div>
                     </div>
-                    <a asp-action="Index" class="btn btn-secondary mt-3">Regresar</a>
+                    
+                    @if (Model.Alojamientos != null && Model.Alojamientos.Any())
+                    {
+                        <h4 class="text-danger fw-bold mb-3">Alojamientos Disponibles</h4>
+                        <div class="row">
+                            @foreach (var alojamiento in Model.Alojamientos)
+                            {
+                                <div class="col-md-4 mb-3">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title text-danger fw-bold">@alojamiento.Nombre</h5>
+                                            <p class="card-text"><small class="text-muted">@alojamiento.TipoAlojamiento?.Nombre</small></p>
+                                            <p class="card-text">Capacidad: @alojamiento.CapacidadMaxima personas</p>
+                                            <p class="card-text">Habitaciones: @alojamiento.NumeroHabitaciones</p>
+                                            @if (!string.IsNullOrEmpty(alojamiento.Descripcion))
+                                            {
+                                                <p class="card-text"><small>@alojamiento.Descripcion</small></p>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    
+                    <a asp-action="Index" class="btn btn-secondary mt-4">Regresar</a>
                 </div>
             </div>
         </div>
