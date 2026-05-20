@@ -19,7 +19,7 @@ El proyecto sigue una arquitectura en capas:
 3. **ReservasFondoXYZ.Web** - Capa de Presentación (MVC)
    - Controladores
    - Vistas con Razor
-   - ViewModels separados de los controladores
+   - **ViewModels separados de los controladores** en la carpeta `ViewModels`
    - Configuración de Identity para autenticación
 
 ## Tecnologías Utilizadas
