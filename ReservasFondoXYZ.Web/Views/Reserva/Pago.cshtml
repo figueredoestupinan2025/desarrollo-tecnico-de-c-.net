@@ -1,0 +1,97 @@
+@model ReservasFondoXYZ.Web.ViewModels.PagoReservaViewModel
+
+@{
+    ViewData["Title"] = "Pago de Reserva";
+    var sitio = ViewBag.Sitio;
+    var alojamiento = ViewBag.Alojamiento;
+}
+
+<h1 class="mb-4">Pago de Reserva</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5>Detalles de la Reserva</h5>
+            </div>
+            <div class="card-body">
+                <h6>@sitio?.Nombre</h6>
+                <h6 class="text-muted">@alojamiento?.Nombre</h6>
+                <hr>
+                <p>
+                    <strong>Fechas:</strong> @Model.FechaInicio.ToString("dd/MM/yyyy") - @Model.FechaFin.ToString("dd/MM/yyyy")<br>
+                    <strong>Número de Personas:</strong> @Model.NumeroPersonas<br>
+                    <strong>Número de Habitaciones:</strong> @Model.NumeroHabitaciones
+                </p>
+                <div class="alert alert-success">
+                    <strong>Tarifa Total:</strong> $@Model.TarifaTotal.ToString("N0")
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header" style="background-color: #8B0000; color: white;">
+                <h5><i class="bi bi-credit-card"></i> Información de Pago</h5>
+            </div>
+            <div class="card-body">
+                <form method="post" asp-action="Pago">
+                    <div asp-validation-summary="All" class="text-danger mb-3"></div>
+                    
+                    <input type="hidden" asp-for="SitioId" />
+                    <input type="hidden" asp-for="AlojamientoId" />
+                    <input type="hidden" asp-for="FechaInicio" />
+                    <input type="hidden" asp-for="FechaFin" />
+                    <input type="hidden" asp-for="NumeroPersonas" />
+                    <input type="hidden" asp-for="NumeroHabitaciones" />
+                    <input type="hidden" asp-for="TarifaTotal" />
+
+                    <div class="mb-3">
+                        <label asp-for="NumeroTarjeta" class="form-label"></label>
+                        <input asp-for="NumeroTarjeta" class="form-control" placeholder="1234 5678 9012 3456" maxlength="16" />
+                        <span asp-validation-for="NumeroTarjeta" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="NombreTitular" class="form-label"></label>
+                        <input asp-for="NombreTitular" class="form-control" placeholder="NOMBRE APELLIDO" />
+                        <span asp-validation-for="NombreTitular" class="text-danger"></span>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label asp-for="FechaExpiracion" class="form-label"></label>
+                            <input asp-for="FechaExpiracion" class="form-control" placeholder="MM/AA" maxlength="5" />
+                            <span asp-validation-for="FechaExpiracion" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="CVV" class="form-label"></label>
+                            <input asp-for="CVV" class="form-control" placeholder="123" maxlength="3" type="password" />
+                            <span asp-validation-for="CVV" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-info small">
+                        <i class="bi bi-info-circle"></i> Este es un sistema de pago simulado. Los datos de la tarjeta no se guardan ni se envían a ningún procesador de pagos real.
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-success w-100">
+                            <i class="bi bi-check-circle"></i> Confirmar Pago y Reserva
+                        </button>
+                    </div>
+                </form>
+                <a asp-action="Disponibilidad" class="btn btn-secondary w-100 mt-2">
+                    <i class="bi bi-x-circle"></i> Cancelar
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

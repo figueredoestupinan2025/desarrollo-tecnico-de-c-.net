@@ -1,0 +1,66 @@
+@model IEnumerable<ReservasFondoXYZ.Data.Models.Alojamiento>
+
+@{
+    ViewData["Title"] = "Alojamientos";
+}
+
+<div class="container mt-4">
+    <h1 class="text-center mb-4" style="color: #8B0000;">Alojamientos</h1>
+    
+    <div class="d-flex justify-content-end mb-3">
+        <a asp-action="Create" class="btn btn-primary" style="background-color: #8B0000; border-color: #8B0000;">
+            <i class="bi bi-plus-lg"></i> Nuevo Alojamiento
+        </a>
+    </div>
+    
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead style="background-color: #8B0000; color: white;">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Sitio</th>
+                    <th>Tipo de Alojamiento</th>
+                    <th>Capacidad</th>
+                    <th>Habitaciones</th>
+                    <th>Estado</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var alojamiento in Model)
+                {
+                    <tr>
+                        <td>@alojamiento.Nombre</td>
+                        <td>@alojamiento.Sitio?.Nombre</td>
+                        <td>@alojamiento.TipoAlojamiento?.Nombre</td>
+                        <td>@alojamiento.CapacidadMaxima personas</td>
+                        <td>@alojamiento.NumeroHabitaciones</td>
+                        <td>
+                            @if (alojamiento.Activo)
+                            {
+                                <span class="badge bg-success">Activo</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">Inactivo</span>
+                            }
+                        </td>
+                        <td class="text-end">
+                            <div class="btn-group">
+                                <a asp-action="Details" asp-route-id="@alojamiento.Id" class="btn btn-sm btn-info">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                <a asp-action="Edit" asp-route-id="@alojamiento.Id" class="btn btn-sm btn-warning">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@alojamiento.Id" class="btn btn-sm btn-danger">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

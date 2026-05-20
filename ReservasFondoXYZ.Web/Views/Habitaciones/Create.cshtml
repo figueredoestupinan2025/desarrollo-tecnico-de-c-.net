@@ -1,0 +1,61 @@
+@model ReservasFondoXYZ.Data.Models.Habitacion
+
+@{
+    ViewData["Title"] = "Crear Habitación";
+}
+
+<div class="container mt-4">
+    <h1 class="text-center mb-4" style="color: #8B0000;">Crear Nueva Habitación</h1>
+    
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header" style="background-color: #8B0000; color: white;">
+                    <h4>Datos de la Habitación</h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Create">
+                        <div asp-validation-summary="All" class="text-danger mb-3"></div>
+                        
+                        <div class="mb-3">
+                            <label asp-for="AlojamientoId" class="form-label"></label>
+                            <select asp-for="AlojamientoId" class="form-control" asp-items="ViewBag.AlojamientoId"></select>
+                            <span asp-validation-for="AlojamientoId" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label asp-for="Numero" class="form-label"></label>
+                            <input asp-for="Numero" class="form-control" />
+                            <span asp-validation-for="Numero" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label asp-for="Descripcion" class="form-label"></label>
+                            <textarea asp-for="Descripcion" class="form-control" rows="4"></textarea>
+                            <span asp-validation-for="Descripcion" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label asp-for="CapacidadMaxima" class="form-label"></label>
+                            <input asp-for="CapacidadMaxima" class="form-control" type="number" min="1" />
+                            <span asp-validation-for="CapacidadMaxima" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between">
+                            <a asp-action="Index" class="btn btn-secondary">
+                                <i class="bi bi-arrow-left"></i> Volver
+                            </a>
+                            <button type="submit" class="btn btn-primary" style="background-color: #8B0000; border-color: #8B0000;">
+                                <i class="bi bi-save"></i> Guardar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

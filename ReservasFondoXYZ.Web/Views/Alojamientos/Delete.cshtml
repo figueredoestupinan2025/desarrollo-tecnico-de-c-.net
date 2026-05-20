@@ -1,0 +1,47 @@
+@model ReservasFondoXYZ.Data.Models.Alojamiento
+
+@{
+    ViewData["Title"] = "Eliminar Alojamiento";
+}
+
+<div class="container mt-4">
+    <h1 class="text-center mb-4" style="color: #8B0000;">Eliminar Alojamiento</h1>
+    
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-danger text-white">
+                    <h4>¿Está seguro de eliminar este alojamiento?</h4>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-4">Nombre</dt>
+                        <dd class="col-sm-8">@Model.Nombre</dd>
+
+                        <dt class="col-sm-4">Sitio</dt>
+                        <dd class="col-sm-8">@Model.Sitio?.Nombre</dd>
+
+                        <dt class="col-sm-4">Tipo de Alojamiento</dt>
+                        <dd class="col-sm-8">@Model.TipoAlojamiento?.Nombre</dd>
+
+                        <dt class="col-sm-4">Capacidad Máxima</dt>
+                        <dd class="col-sm-8">@Model.CapacidadMaxima personas</dd>
+                    </dl>
+                </div>
+                <div class="card-footer">
+                    <form asp-action="Delete">
+                        <input type="hidden" asp-for="Id" />
+                        <div class="d-flex justify-content-between">
+                            <a asp-action="Index" class="btn btn-secondary">
+                                <i class="bi bi-arrow-left"></i> Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-danger">
+                                <i class="bi bi-trash"></i> Eliminar Definitivamente
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

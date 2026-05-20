@@ -1,0 +1,101 @@
+@model ReservasFondoXYZ.Data.Models.Alojamiento
+
+@{
+    ViewData["Title"] = "Detalle de Alojamiento";
+}
+
+<div class="container mt-4">
+    <h1 class="text-center mb-4" style="color: #8B0000;">Detalle de Alojamiento</h1>
+    
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header" style="background-color: #8B0000; color: white;">
+                    <h4>@Model.Nombre</h4>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-4">Sitio</dt>
+                        <dd class="col-sm-8">@Model.Sitio?.Nombre</dd>
+
+                        <dt class="col-sm-4">Tipo de Alojamiento</dt>
+                        <dd class="col-sm-8">@Model.TipoAlojamiento?.Nombre</dd>
+
+                        <dt class="col-sm-4">Descripción</dt>
+                        <dd class="col-sm-8">@Model.Descripcion</dd>
+
+                        <dt class="col-sm-4">Capacidad Máxima</dt>
+                        <dd class="col-sm-8">@Model.CapacidadMaxima personas</dd>
+
+                        <dt class="col-sm-4">Número de Habitaciones</dt>
+                        <dd class="col-sm-8">@Model.NumeroHabitaciones</dd>
+
+                        <dt class="col-sm-4">Estado</dt>
+                        <dd class="col-sm-8">
+                            @if (Model.Activo)
+                            {
+                                <span class="badge bg-success">Activo</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">Inactivo</span>
+                            }
+                        </dd>
+                    </dl>
+                    
+                    @if (Model.Habitaciones != null && Model.Habitaciones.Any())
+                    {
+                        <h5 class="mt-4 mb-3" style="color: #8B0000;">Habitaciones</h5>
+                        <div class="table-responsive">
+                            <table class="table table-sm">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Número</th>
+                                        <th>Descripción</th>
+                                        <th>Capacidad</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var habitacion in Model.Habitaciones)
+                                    {
+                                        <tr>
+                                            <td>@habitacion.Numero</td>
+                                            <td>@habitacion.Descripcion</td>
+                                            <td>@habitacion.CapacidadMaxima personas</td>
+                                            <td>
+                                                @if (habitacion.Activo)
+                                                {
+                                                    <span class="badge bg-success">Activo</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-secondary">Inactivo</span>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-between">
+                        <a asp-action="Index" class="btn btn-secondary">
+                            <i class="bi bi-arrow-left"></i> Volver a la Lista
+                        </a>
+                        <div>
+                            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">
+                                <i class="bi bi-pencil"></i> Editar
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">
+                                <i class="bi bi-trash"></i> Eliminar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
