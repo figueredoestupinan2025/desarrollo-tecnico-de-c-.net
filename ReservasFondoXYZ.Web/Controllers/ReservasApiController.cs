@@ -40,7 +40,7 @@ public class ReservasApiController : ControllerBase
         return Ok(sitio);
     }
 
-    [HttpPost("disponibilidad")]
+    [HttpGet("disponibilidad")]
     [AllowAnonymous]
     public async Task<ActionResult<List<HabitacionDisponibleDto>>> CheckDisponibilidad([FromQuery] DateTime fechaInicio, [FromQuery] DateTime fechaFin, [FromQuery] int numeroPersonas, [FromQuery] int? sitioId = null)
     {

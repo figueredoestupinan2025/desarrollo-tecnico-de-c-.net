@@ -82,6 +82,7 @@ public class ReservaController : Controller
             return NotFound();
         }
 
+        var tipoTemporadaId = await _reservaService.ObtenerTipoTemporadaPorFechaAsync(fechaInicio);
         var tiposTemporada = await _sitioService.ObtenerTiposTemporadaAsync();
         if (!tiposTemporada.Any())
         {
@@ -89,7 +90,7 @@ public class ReservaController : Controller
             return RedirectToAction(nameof(Disponibilidad));
         }
 
-        var tarifas = await _reservaService.ObtenerTarifasAsync(sitioId, tiposTemporada.First().Id, numeroPersonas, alojamientoId);
+        var tarifas = await _reservaService.ObtenerTarifasAsync(sitioId, tipoTemporadaId, numeroPersonas, alojamientoId);
 
         var reserva = new Reserva
         {
@@ -108,7 +109,7 @@ public class ReservaController : Controller
             var tarifa = tarifas.First();
             reserva.TarifaTotal = await _reservaService.CalcularTarifaTotalAsync(
                 sitioId, alojamiento.NumeroHabitaciones, numeroPersonas, alojamientoId,
-                tarifa.TipoTemporadaId, fechaInicio, fechaFin);
+                tipoTemporadaId, fechaInicio, fechaFin);
         }
 
         ViewBag.Sitio = sitio;
@@ -120,27 +121,57 @@ public class ReservaController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Crear(Reserva reserva)
+    public async Task<IActionResult> Crear(CrearReservaViewModel model)
     {
+        var tipoTemporadaId = await _reservaService.ObtenerTipoTemporadaPorFechaAsync(model.FechaInicio);
+
         if (ModelState.IsValid)
         {
             var user = await _userManager.GetUserAsync(User);
             if (user != null)
             {
-                reserva.UsuarioId = user.Id;
-                reserva.EstadoReservaId = 1;
-                reserva.FechaReserva = DateTime.Now;
+                var reserva = new Reserva
+                {
+                    UsuarioId = user.Id,
+                    SitioId = model.SitioId,
+                    AlojamientoId = model.AlojamientoId,
+                    FechaInicio = model.FechaInicio,
+                    FechaFin = model.FechaFin,
+                    NumeroPersonas = model.NumeroPersonas,
+                    NumeroHabitaciones = model.NumeroHabitaciones,
+                    EstadoReservaId = 1,
+                    FechaReserva = DateTime.Now
+                };
+
+                reserva.TarifaTotal = await _reservaService.CalcularTarifaTotalAsync(
+                    model.SitioId, model.NumeroHabitaciones, model.NumeroPersonas, model.AlojamientoId,
+                    tipoTemporadaId, model.FechaInicio, model.FechaFin);
+
                 await _reservaService.CrearReservaAsync(reserva);
                 return RedirectToAction(nameof(MisReservas));
             }
         }
 
-        var sitio = await _sitioService.ObtenerPorIdAsync(reserva.SitioId);
-        var alojamiento = sitio?.Alojamientos.FirstOrDefault(a => a.Id == reserva.AlojamientoId);
+        var sitio = await _sitioService.ObtenerPorIdAsync(model.SitioId);
+        var alojamiento = sitio?.Alojamientos.FirstOrDefault(a => a.Id == model.AlojamientoId);
         ViewBag.Sitio = sitio;
         ViewBag.Alojamiento = alojamiento;
 
-        return View(reserva);
+        var reservaViewModel = new Reserva
+        {
+            SitioId = model.SitioId,
+            AlojamientoId = model.AlojamientoId,
+            FechaInicio = model.FechaInicio,
+            FechaFin = model.FechaFin,
+            NumeroPersonas = model.NumeroPersonas,
+            NumeroHabitaciones = model.NumeroHabitaciones
+        };
+
+        reservaViewModel.TarifaTotal = await _reservaService.CalcularTarifaTotalAsync(
+            model.SitioId, model.NumeroHabitaciones, model.NumeroPersonas, model.AlojamientoId,
+            tipoTemporadaId, model.FechaInicio, model.FechaFin);
+
+        return View(reservaViewModel);
     }
 
     [HttpGet]

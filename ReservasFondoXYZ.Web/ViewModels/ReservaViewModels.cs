@@ -22,3 +22,27 @@ public class DisponibilidadViewModel
     [Display(Name = "Sitio (opcional)")]
     public int? SitioId { get; set; }
 }
+
+public class CrearReservaViewModel
+{
+    [Required]
+    public int SitioId { get; set; }
+
+    [Required]
+    public int AlojamientoId { get; set; }
+
+    [Required]
+    [DataType(DataType.Date)]
+    public DateTime FechaInicio { get; set; }
+
+    [Required]
+    [DataType(DataType.Date)]
+    public DateTime FechaFin { get; set; }
+
+    [Required]
+    [Range(1, 20)]
+    public int NumeroPersonas { get; set; }
+
+    [Required]
+    public int NumeroHabitaciones { get; set; }
+}
