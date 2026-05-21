@@ -242,7 +242,7 @@ public class ReservaService : IReservaService
 
             var personasAdicionales = Math.Max(0, numeroPersonas - tarifa.NumeroPersonasMax);
             var precioPorNoche = tarifa.PrecioBase + (personasAdicionales * (tarifa.PrecioPersonaAdicional ?? 0));
-            var tarifaTotal = precioPorNoche * numeroNoches;
+            var tarifaTotal = precioPorNoche * numeroNoches * numeroHabitaciones;
 
             return tarifaTotal;
         }
@@ -257,10 +257,16 @@ public class ReservaService : IReservaService
                 Direction = System.Data.ParameterDirection.Output
             };
 
+            var nombreTemporadaParam = new SqlParameter("@NombreTemporada", System.Data.SqlDbType.NVarChar, 100)
+            {
+                Direction = System.Data.ParameterDirection.Output
+            };
+
             await _context.Database.ExecuteSqlRawAsync(
-                "EXEC ObtenerTemporadaPorFecha @Fecha, @TipoTemporadaId OUTPUT",
+                "EXEC ObtenerTemporadaPorFecha @Fecha, @TipoTemporadaId OUTPUT, @NombreTemporada OUTPUT",
                 new SqlParameter("@Fecha", fecha),
-                tipoTemporadaParam);
+                tipoTemporadaParam,
+                nombreTemporadaParam);
 
             return (int)(tipoTemporadaParam.Value ?? 1);
         }
