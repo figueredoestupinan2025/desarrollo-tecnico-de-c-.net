@@ -92,3 +92,81 @@ public class PagoReservaViewModel
     [StringLength(3, MinimumLength = 3, ErrorMessage = "El CVV debe tener 3 dígitos")]
     public string CVV { get; set; } = string.Empty;
 }
+
+public class CrearAlojamientoViewModel
+{
+    [Required]
+    public int SitioId { get; set; }
+
+    [Required]
+    public int TipoAlojamientoId { get; set; }
+
+    [Required]
+    public string Nombre { get; set; } = string.Empty;
+
+    public string? Descripcion { get; set; }
+
+    [Required]
+    public int CapacidadMaxima { get; set; }
+
+    [Required]
+    public int NumeroHabitaciones { get; set; }
+}
+
+public class EditarAlojamientoViewModel
+{
+    [Required]
+    public int Id { get; set; }
+
+    [Required]
+    public int SitioId { get; set; }
+
+    [Required]
+    public int TipoAlojamientoId { get; set; }
+
+    [Required]
+    public string Nombre { get; set; } = string.Empty;
+
+    public string? Descripcion { get; set; }
+
+    [Required]
+    public int CapacidadMaxima { get; set; }
+
+    [Required]
+    public int NumeroHabitaciones { get; set; }
+
+    public bool Activo { get; set; }
+}
+
+public class CrearHabitacionViewModel
+{
+    [Required]
+    public int AlojamientoId { get; set; }
+
+    [Required]
+    public string Numero { get; set; } = string.Empty;
+
+    public string? Descripcion { get; set; }
+
+    [Required]
+    public int CapacidadMaxima { get; set; }
+}
+
+public class EditarHabitacionViewModel
+{
+    [Required]
+    public int Id { get; set; }
+
+    [Required]
+    public int AlojamientoId { get; set; }
+
+    [Required]
+    public string Numero { get; set; } = string.Empty;
+
+    public string? Descripcion { get; set; }
+
+    [Required]
+    public int CapacidadMaxima { get; set; }
+
+    public bool Activo { get; set; }
+}

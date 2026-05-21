@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ReservasFondoXYZ.Business.Services;
 using ReservasFondoXYZ.Data.Models;
+using ReservasFondoXYZ.Web.ViewModels;
 
 namespace ReservasFondoXYZ.Web.Controllers;
 
@@ -54,19 +55,28 @@ public class AlojamientosController : Controller
     // POST: Alojamientos/Create
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(Alojamiento alojamiento)
+    public async Task<IActionResult> Create(CrearAlojamientoViewModel model)
     {
         if (ModelState.IsValid)
         {
-            alojamiento.Activo = true;
+            var alojamiento = new Alojamiento
+            {
+                SitioId = model.SitioId,
+                TipoAlojamientoId = model.TipoAlojamientoId,
+                Nombre = model.Nombre,
+                Descripcion = model.Descripcion,
+                CapacidadMaxima = model.CapacidadMaxima,
+                NumeroHabitaciones = model.NumeroHabitaciones,
+                Activo = true
+            };
             await _alojamientoService.CrearAsync(alojamiento);
             return RedirectToAction(nameof(Index));
         }
         var sitios = await _sitioService.ObtenerTodosAsync();
         var tiposAlojamiento = await _alojamientoService.ObtenerTiposAlojamientoAsync();
-        ViewBag.SitioId = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(sitios, "Id", "Nombre", alojamiento.SitioId);
-        ViewBag.TipoAlojamientoId = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(tiposAlojamiento, "Id", "Nombre", alojamiento.TipoAlojamientoId);
-        return View(alojamiento);
+        ViewBag.SitioId = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(sitios, "Id", "Nombre", model.SitioId);
+        ViewBag.TipoAlojamientoId = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(tiposAlojamiento, "Id", "Nombre", model.TipoAlojamientoId);
+        return View(model);
     }
 
     // GET: Alojamientos/Edit/5
@@ -82,33 +92,60 @@ public class AlojamientosController : Controller
         {
             return NotFound();
         }
+        
+        var model = new EditarAlojamientoViewModel
+        {
+            Id = alojamiento.Id,
+            SitioId = alojamiento.SitioId,
+            TipoAlojamientoId = alojamiento.TipoAlojamientoId,
+            Nombre = alojamiento.Nombre,
+            Descripcion = alojamiento.Descripcion,
+            CapacidadMaxima = alojamiento.CapacidadMaxima,
+            NumeroHabitaciones = alojamiento.NumeroHabitaciones,
+            Activo = alojamiento.Activo
+        };
+        
         var sitios = await _sitioService.ObtenerTodosAsync();
         var tiposAlojamiento = await _alojamientoService.ObtenerTiposAlojamientoAsync();
-        ViewBag.SitioId = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(sitios, "Id", "Nombre", alojamiento.SitioId);
-        ViewBag.TipoAlojamientoId = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(tiposAlojamiento, "Id", "Nombre", alojamiento.TipoAlojamientoId);
-        return View(alojamiento);
+        ViewBag.SitioId = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(sitios, "Id", "Nombre", model.SitioId);
+        ViewBag.TipoAlojamientoId = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(tiposAlojamiento, "Id", "Nombre", model.TipoAlojamientoId);
+        return View(model);
     }
 
     // POST: Alojamientos/Edit/5
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, Alojamiento alojamiento)
+    public async Task<IActionResult> Edit(int id, EditarAlojamientoViewModel model)
     {
-        if (id != alojamiento.Id)
+        if (id != model.Id)
         {
             return NotFound();
         }
 
         if (ModelState.IsValid)
         {
+            var alojamiento = await _alojamientoService.ObtenerPorIdAsync(id);
+            if (alojamiento == null)
+            {
+                return NotFound();
+            }
+            
+            alojamiento.SitioId = model.SitioId;
+            alojamiento.TipoAlojamientoId = model.TipoAlojamientoId;
+            alojamiento.Nombre = model.Nombre;
+            alojamiento.Descripcion = model.Descripcion;
+            alojamiento.CapacidadMaxima = model.CapacidadMaxima;
+            alojamiento.NumeroHabitaciones = model.NumeroHabitaciones;
+            alojamiento.Activo = model.Activo;
+            
             await _alojamientoService.ActualizarAsync(alojamiento);
             return RedirectToAction(nameof(Index));
         }
         var sitios = await _sitioService.ObtenerTodosAsync();
         var tiposAlojamiento = await _alojamientoService.ObtenerTiposAlojamientoAsync();
-        ViewBag.SitioId = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(sitios, "Id", "Nombre", alojamiento.SitioId);
-        ViewBag.TipoAlojamientoId = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(tiposAlojamiento, "Id", "Nombre", alojamiento.TipoAlojamientoId);
-        return View(alojamiento);
+        ViewBag.SitioId = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(sitios, "Id", "Nombre", model.SitioId);
+        ViewBag.TipoAlojamientoId = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(tiposAlojamiento, "Id", "Nombre", model.TipoAlojamientoId);
+        return View(model);
     }
 
     // GET: Alojamientos/Delete/5
