@@ -71,6 +71,9 @@ public class PagoReservaViewModel
     public int NumeroHabitaciones { get; set; }
 
     [Required]
+    public int HabitacionId { get; set; }
+
+    [Required]
     public decimal TarifaTotal { get; set; }
 
     [Required(ErrorMessage = "El número de tarjeta es requerido")]

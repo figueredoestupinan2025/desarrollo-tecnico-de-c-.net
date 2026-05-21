@@ -62,7 +62,7 @@ public class ReservaController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Crear(int sitioId, int alojamientoId, DateTime fechaInicio, DateTime fechaFin, int numeroPersonas)
+    public async Task<IActionResult> Crear(int sitioId, int alojamientoId, DateTime fechaInicio, DateTime fechaFin, int numeroPersonas, int habitacionId)
     {
         var user = await _userManager.GetUserAsync(User);
         if (user == null)
@@ -104,6 +104,7 @@ public class ReservaController : Controller
             FechaFin = fechaFin,
             NumeroPersonas = numeroPersonas,
             NumeroHabitaciones = alojamiento.NumeroHabitaciones,
+            HabitacionId = habitacionId,
             TarifaTotal = tarifaTotal
         };
 
@@ -183,7 +184,7 @@ public class ReservaController : Controller
                 TarifaTotal = model.TarifaTotal
             };
 
-            await _reservaService.CrearReservaAsync(reserva);
+            await _reservaService.CrearReservaAsync(reserva, new List<int> { model.HabitacionId });
             return RedirectToAction(nameof(Confirmacion), new { id = reserva.Id });
         }
 
