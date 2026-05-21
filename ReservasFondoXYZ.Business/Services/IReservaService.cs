@@ -10,7 +10,7 @@ public interface IReservaService
     Task<List<TarifaDto>> ObtenerTarifasAsync(int sitioId, int tipoTemporadaId, int numeroPersonas, int? alojamientoId = null);
     Task<decimal> CalcularTarifaTotalAsync(int sitioId, int numeroHabitaciones, int numeroPersonas, int? alojamientoId, int tipoTemporadaId, DateTime fechaInicio, DateTime fechaFin);
     Task<int> ObtenerTipoTemporadaPorFechaAsync(DateTime fecha);
-    Task<Reserva> CrearReservaAsync(Reserva reserva);
+    Task<Reserva> CrearReservaAsync(Reserva reserva, List<int>? habitacionesIds = null);
     Task<List<Reserva>> ObtenerReservasPorUsuarioAsync(string usuarioId);
     Task<Reserva?> ObtenerReservaPorIdAsync(int id);
 }

@@ -1,5 +1,6 @@
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using ReservasFondoXYZ.Business.Services;
 using ReservasFondoXYZ.Data.Data;
 using ReservasFondoXYZ.Data.Dtos;
@@ -10,10 +11,12 @@ namespace ReservasFondoXYZ.Business.Services;
 public class ReservaService : IReservaService
 {
     private readonly ApplicationDbContext _context;
+    private readonly ILogger<ReservaService> _logger;
 
-    public ReservaService(ApplicationDbContext context)
+    public ReservaService(ApplicationDbContext context, ILogger<ReservaService> logger)
     {
         _context = context;
+        _logger = logger;
     }
 
     public async Task<List<HabitacionDisponibleDto>> ObtenerHabitacionesDisponiblesAsync(DateTime fechaInicio, DateTime fechaFin)
@@ -28,8 +31,10 @@ public class ReservaService : IReservaService
 
             return habitaciones;
         }
-        catch
+        catch (Exception ex)
         {
+            _logger.LogError(ex, "Error ejecutando stored procedure ObtenerHabitacionesDisponiblesPorFechas, usando fallback LINQ");
+            
             var habitacionesOcupadas = await _context.ReservasHabitaciones
                 .Where(rh =>
                     rh.Reserva.FechaInicio < fechaFin &&
@@ -79,8 +84,10 @@ public class ReservaService : IReservaService
 
             return habitaciones;
         }
-        catch
+        catch (Exception ex)
         {
+            _logger.LogError(ex, "Error ejecutando stored procedure ObtenerHabitacionesDisponiblesPorFechasYPersonas, usando fallback LINQ");
+            
             var habitacionesOcupadas = await _context.ReservasHabitaciones
                 .Where(rh =>
                     rh.Reserva.FechaInicio < fechaFin &&
@@ -136,8 +143,10 @@ public class ReservaService : IReservaService
 
             return tarifas;
         }
-        catch
+        catch (Exception ex)
         {
+            _logger.LogError(ex, "Error ejecutando stored procedure ObtenerTarifas, usando fallback LINQ");
+            
             var query = _context.Tarifas
                 .Include(t => t.Sitio)
                 .Include(t => t.Alojamiento)
@@ -208,8 +217,10 @@ public class ReservaService : IReservaService
 
             return (decimal)(tarifaTotalParam.Value ?? 0);
         }
-        catch
+        catch (Exception ex)
         {
+            _logger.LogError(ex, "Error ejecutando stored procedure CalcularTarifaTotal, usando fallback LINQ");
+            
             var numeroNoches = (fechaFin - fechaInicio).Days;
             if (numeroNoches <= 0)
             {
@@ -270,8 +281,10 @@ public class ReservaService : IReservaService
 
             return (int)(tipoTemporadaParam.Value ?? 1);
         }
-        catch
+        catch (Exception ex)
         {
+            _logger.LogError(ex, "Error ejecutando stored procedure ObtenerTemporadaPorFecha, usando fallback LINQ");
+            
             var temporada = await _context.Temporadas
                 .Where(t => t.Activo && fecha >= t.FechaInicio && fecha <= t.FechaFin)
                 .OrderBy(t => t.TipoTemporadaId)
@@ -281,11 +294,37 @@ public class ReservaService : IReservaService
         }
     }
 
-    public async Task<Reserva> CrearReservaAsync(Reserva reserva)
+    public async Task<Reserva> CrearReservaAsync(Reserva reserva, List<int>? habitacionesIds = null)
     {
-        _context.Reservas.Add(reserva);
-        await _context.SaveChangesAsync();
-        return reserva;
+        using var transaction = await _context.Database.BeginTransactionAsync();
+        try
+        {
+            _context.Reservas.Add(reserva);
+            await _context.SaveChangesAsync();
+
+            if (habitacionesIds != null && habitacionesIds.Any())
+            {
+                foreach (var habitacionId in habitacionesIds)
+                {
+                    var reservaHabitacion = new ReservaHabitacion
+                    {
+                        ReservaId = reserva.Id,
+                        HabitacionId = habitacionId
+                    };
+                    _context.ReservasHabitaciones.Add(reservaHabitacion);
+                }
+                await _context.SaveChangesAsync();
+            }
+
+            await transaction.CommitAsync();
+            return reserva;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error creando reserva, realizando rollback");
+            await transaction.RollbackAsync();
+            throw;
+        }
     }
 
     public async Task<List<Reserva>> ObtenerReservasPorUsuarioAsync(string usuarioId)
