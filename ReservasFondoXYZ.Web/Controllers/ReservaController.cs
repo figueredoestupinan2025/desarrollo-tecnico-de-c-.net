@@ -234,7 +234,7 @@ public class ReservaController : Controller
                     FechaFin = model.FechaFin,
                     NumeroPersonas = model.NumeroPersonas,
                     NumeroHabitaciones = model.NumeroHabitaciones,
-                    EstadoReservaId = 1,
+                    EstadoReservaId = 2,
                     FechaReserva = DateTime.Now
                 };
 
