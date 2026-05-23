@@ -157,6 +157,16 @@ public class ReservaController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Pago(PagoReservaViewModel model)
     {
+        if (model.FechaInicio <= DateTime.Today)
+        {
+            ModelState.AddModelError("", "La fecha de inicio debe ser futura.");
+        }
+
+        if (model.FechaInicio >= model.FechaFin)
+        {
+            ModelState.AddModelError("", "La fecha de inicio debe ser anterior a la fecha de fin.");
+        }
+
         if (!ModelState.IsValid)
         {
             var sitio = await _sitioService.ObtenerPorIdAsync(model.SitioId);
@@ -218,6 +228,16 @@ public class ReservaController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Crear(CrearReservaViewModel model)
     {
+        if (model.FechaInicio <= DateTime.Today)
+        {
+            ModelState.AddModelError("", "La fecha de inicio debe ser futura.");
+        }
+
+        if (model.FechaInicio >= model.FechaFin)
+        {
+            ModelState.AddModelError("", "La fecha de inicio debe ser anterior a la fecha de fin.");
+        }
+
         var tipoTemporadaId = await _reservaService.ObtenerTipoTemporadaPorFechaAsync(model.FechaInicio);
 
         if (ModelState.IsValid)
