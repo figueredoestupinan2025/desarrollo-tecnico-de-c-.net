@@ -3,6 +3,10 @@
 ## Descripción
 Sistema de reservas desarrollado en .NET Core MVC para el Fondo XYZ, que permite a los asociados reservar sedes recreativas y apartamentos.
 
+## Documentos de apoyo
+- Demo reproducible paso a paso: `DEMO.md`
+- Validación del anexo (requiere OCR): `ANEXO_VALIDACION.md`
+
 ## Arquitectura del Proyecto
 El proyecto sigue una arquitectura en capas:
 
@@ -72,6 +76,15 @@ Todos los procedimientos almacenados se consumen desde la capa de negocio usando
 
 ## Instrucciones de Instalación y Ejecución
 
+### Estado de validación
+- Solución compilada con `dotnet build ReservasFondoXYZ.sln`.
+- Resultado actual: **0 errores y 0 advertencias**.
+- La aplicación arranca en ASP.NET Core MVC; para usar las pantallas que consultan datos se debe tener disponible SQL Server o LocalDB y ejecutar los scripts SQL incluidos.
+- Usuario administrador inicial:
+  - Documento: `999999999`
+  - Contraseña: `Admin123!`
+  - Rol: `Admin`
+
 ### 1. Requisitos Previos
 - .NET SDK 9.0
 - SQL Server (o LocalDB incluido en Visual Studio)
@@ -82,13 +95,57 @@ Todos los procedimientos almacenados se consumen desde la capa de negocio usando
 2. Ejecutar el script **DatabaseScript.sql** para crear la base de datos y tablas
 3. Ejecutar el script **StoredProcedures.sql** para crear los procedimientos almacenados
 
+También se puede ejecutar por consola si `sqlcmd` está disponible:
+```powershell
+sqlcmd -S "(localdb)\mssqllocaldb" -i DatabaseScript.sql
+sqlcmd -S "(localdb)\mssqllocaldb" -i StoredProcedures.sql
+```
+
+### Alternativa recomendada (reproducible): SQL Server en Docker
+1. Copiar `.env.example` a `.env` y definir `MSSQL_SA_PASSWORD` (password fuerte).
+2. Levantar BD y ejecutar scripts:
+```powershell
+docker compose up -d mssql
+docker compose up --no-deps db-init
+```
+3. Ejecutar la web apuntando al contenedor:
+```powershell
+$env:ASPNETCORE_ENVIRONMENT="Docker"
+$env:MSSQL_SA_PASSWORD=(Get-Content .env | Select-String -Pattern '^MSSQL_SA_PASSWORD=' | ForEach-Object { $_.Line.Split('=')[1] })
+dotnet run --no-launch-profile --project .\\ReservasFondoXYZ.Web\\ReservasFondoXYZ.Web.csproj
+```
+Nota: `ReservasFondoXYZ.Web\\appsettings.Docker.json` usa `localhost,1433` (mapeo de puerto del contenedor en `docker-compose.yml`).
+
+### Smoke test (rápido)
+Con la BD y la web corriendo, ejecuta:
+```powershell
+powershell -ExecutionPolicy Bypass -File .\\scripts\\smoke\\smoke.ps1
+```
+
+### Alcance: pago en línea (MOCK)
+El PDF menciona "pagar en línea". En esta implementación el flujo de "Pago" es **simulado (MOCK)** para fines de la prueba:
+- Se calcula la tarifa total por SP.
+- Se registra la reserva dejando una referencia en `Reserva.Observaciones` con el prefijo `Pago aprobado (Mock)`.
+
+Configuración:
+- `ReservasFondoXYZ.Web\\appsettings.json` -> `Payment:Provider` (por defecto `Mock`).
+- Si se configura un proveedor distinto a `Mock`, el sistema rechaza el pago y muestra un mensaje indicando que el proveedor no está configurado (punto de extensión para integrar pasarela real).
+
+### Nota sobre el anexo (PDF)
+El archivo `RESERVAS_AnexoPruebaTecnica_mayo2026 (5).pdf` parece estar escaneado (sin texto seleccionable), por lo que para extraer requisitos adicionales se requiere OCR.
+Recomendación: si el evaluador requiere validar ese anexo, convertirlo a texto (OCR) y contrastar requisitos adicionales contra el sistema.
+Guía: `ANEXO_VALIDACION.md` y `scripts/ocr/README.md`.
+
 ### 3. Configurar la Cadena de Conexión
-Verificar que la cadena de conexión en `appsettings.json` sea correcta:
+Verificar que la cadena de conexión en `ReservasFondoXYZ.Web\\appsettings.json` sea correcta para tu entorno:
+- **SQL Server Express** (valor por defecto actual):
 ```json
 "ConnectionStrings": {
-  "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=ReservasFondoXYZ;Trusted_Connection=True;MultipleActiveResultSets=true"
+  "DefaultConnection": "Server=.\\SQLEXPRESS;Database=ReservasFondoXYZ;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=true"
 }
 ```
+
+- **LocalDB (opcional)**: si prefieres LocalDB, puedes cambiar `Server` a `(localdb)\\mssqllocaldb`.
 
 ### 4. Ejecutar la Aplicación
 1. Abrir una terminal en la carpeta del proyecto
@@ -112,12 +169,21 @@ Para habilitar la recuperación de contraseña por correo electrónico, edita la
 }
 ```
 
+### Troubleshooting Docker (reinicio limpio)
+Si `db-init` falló a mitad de ejecución y el volumen quedó en estado inconsistente, reinicia desde cero eliminando volumen:
+```powershell
+docker compose down -v
+docker compose up -d mssql
+docker compose up --no-deps db-init
+```
+
 ## Funcionalidades Principales
 - **Registro y Autenticación de Usuarios**: Mediante ASP.NET Core Identity
 - **Consulta de Disponibilidad**: Buscar habitaciones disponibles por fechas y número de personas
-- **Gestión de Reservas**: Crear, ver y consultar reservas
+- **Gestión de Reservas**: Crear, ver y consultar reservas, incluyendo selección de varias habitaciones y validación final de disponibilidad
 - **Recuperación de Contraseña**: Mediante SMTP
-- **CRUD de Sitios**: Gestión completa de sitios recreativos y apartamentos
+- **CRUD administrativo**: Gestión completa de sitios, alojamientos, habitaciones, temporadas y tarifas
+- **Seguridad por roles**: CRUD administrativo protegido para el rol `Admin`; reservas protegidas para usuarios autenticados
 - **Página Principal**: Lista de sedes recreativas y apartamentos con pestañas
 
 ## Datos Iniciales
