@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ReservasFondoXYZ.Business.Services;
 using ReservasFondoXYZ.Data.Models;
@@ -6,6 +7,7 @@ using ReservasFondoXYZ.Web.Models;
 
 namespace ReservasFondoXYZ.Web.Controllers;
 
+[AllowAnonymous]
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;

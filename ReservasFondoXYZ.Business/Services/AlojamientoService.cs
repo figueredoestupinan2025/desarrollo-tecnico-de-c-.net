@@ -49,9 +49,20 @@ public class AlojamientoService : IAlojamientoService
 
     public async Task<Alojamiento?> ActualizarAsync(Alojamiento alojamiento)
     {
-        _context.Entry(alojamiento).State = EntityState.Modified;
+        var existing = await _context.Alojamientos.FindAsync(alojamiento.Id);
+        if (existing == null)
+            return null;
+
+        existing.Nombre = alojamiento.Nombre;
+        existing.Descripcion = alojamiento.Descripcion;
+        existing.CapacidadMaxima = alojamiento.CapacidadMaxima;
+        existing.NumeroHabitaciones = alojamiento.NumeroHabitaciones;
+        existing.Activo = alojamiento.Activo;
+        existing.TipoAlojamientoId = alojamiento.TipoAlojamientoId;
+        existing.SitioId = alojamiento.SitioId;
+
         await _context.SaveChangesAsync();
-        return alojamiento;
+        return existing;
     }
 
     public async Task<bool> EliminarAsync(int id)
@@ -59,6 +70,14 @@ public class AlojamientoService : IAlojamientoService
         var alojamiento = await _context.Alojamientos.FindAsync(id);
         if (alojamiento == null)
             return false;
+
+        var tieneReservasActivas = await _context.Reservas
+            .AnyAsync(r => r.AlojamientoId == id && 
+                          r.EstadoReservaId != 3 && 
+                          r.FechaFin >= DateTime.Today);
+
+        if (tieneReservasActivas)
+            throw new InvalidOperationException("No se puede desactivar el alojamiento porque tiene reservas futuras activas.");
 
         alojamiento.Activo = false;
         await _context.SaveChangesAsync();

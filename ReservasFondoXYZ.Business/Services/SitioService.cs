@@ -38,9 +38,19 @@ public class SitioService : ISitioService
 
     public async Task<Sitio?> ActualizarAsync(Sitio sitio)
     {
-        _context.Entry(sitio).State = EntityState.Modified;
+        var existing = await _context.Sitios.FindAsync(sitio.Id);
+        if (existing == null)
+            return null;
+
+        existing.Nombre = sitio.Nombre;
+        existing.Ubicacion = sitio.Ubicacion;
+        existing.Descripcion = sitio.Descripcion;
+        existing.CapacidadTotal = sitio.CapacidadTotal;
+        existing.Activo = sitio.Activo;
+        existing.TipoSitioId = sitio.TipoSitioId;
+
         await _context.SaveChangesAsync();
-        return sitio;
+        return existing;
     }
 
     public async Task<bool> EliminarAsync(int id)
@@ -48,6 +58,14 @@ public class SitioService : ISitioService
         var sitio = await _context.Sitios.FindAsync(id);
         if (sitio == null)
             return false;
+
+        var tieneReservasActivas = await _context.Reservas
+            .AnyAsync(r => r.SitioId == id && 
+                          r.EstadoReservaId != 3 && 
+                          r.FechaFin >= DateTime.Today);
+
+        if (tieneReservasActivas)
+            throw new InvalidOperationException("No se puede desactivar el sitio porque tiene reservas futuras activas.");
 
         sitio.Activo = false;
         await _context.SaveChangesAsync();

@@ -1,0 +1,25 @@
+@model ReservasFondoXYZ.Data.Models.Tarifa
+
+@{
+    ViewData["Title"] = "Detalle de Tarifa";
+}
+
+<h1>Detalle de Tarifa</h1>
+
+<div class="card">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Sitio</dt><dd class="col-sm-9">@Model.Sitio?.Nombre</dd>
+            <dt class="col-sm-3">Alojamiento</dt><dd class="col-sm-9">@(Model.Alojamiento?.Nombre ?? "General")</dd>
+            <dt class="col-sm-3">Temporada</dt><dd class="col-sm-9">@Model.TipoTemporada?.Nombre</dd>
+            <dt class="col-sm-3">Personas</dt><dd class="col-sm-9">@Model.NumeroPersonasMin - @Model.NumeroPersonasMax</dd>
+            <dt class="col-sm-3">Habitaciones</dt><dd class="col-sm-9">@Model.NumeroHabitaciones</dd>
+            <dt class="col-sm-3">Precio base</dt><dd class="col-sm-9">$@Model.PrecioBase.ToString("N0")</dd>
+            <dt class="col-sm-3">Adicional</dt><dd class="col-sm-9">@(Model.PrecioPersonaAdicional?.ToString("N0") ?? "No aplica")</dd>
+            <dt class="col-sm-3">Activa</dt><dd class="col-sm-9">@(Model.Activo ? "Sí" : "No")</dd>
+            <dt class="col-sm-3">Descripción</dt><dd class="col-sm-9">@Model.Descripcion</dd>
+        </dl>
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Editar</a>
+        <a asp-action="Index" class="btn btn-secondary">Volver</a>
+    </div>
+</div>

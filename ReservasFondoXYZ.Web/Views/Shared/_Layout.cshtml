@@ -38,8 +38,27 @@
                         <a class="nav-link text-dark fw-bold" style="font-size: 0.85rem;" asp-area="" asp-controller="Home" asp-action="Index">Sedes Recreativas y Apartamentos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" style="font-size: 0.85rem;" asp-area="" asp-controller="Reserva" asp-action="MisReservas">Regresar</a>
+                        <a class="nav-link text-dark" style="font-size: 0.85rem;" asp-area="" asp-controller="Reserva" asp-action="Disponibilidad">Disponibilidad</a>
                     </li>
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" style="font-size: 0.85rem;" asp-area="" asp-controller="Reserva" asp-action="MisReservas">Mis Reservas</a>
+                        </li>
+                    }
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" id="adminMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 0.85rem;">Administración</a>
+                            <ul class="dropdown-menu" aria-labelledby="adminMenu">
+                                <li><a class="dropdown-item" asp-controller="Sitios" asp-action="Index">Sitios</a></li>
+                                <li><a class="dropdown-item" asp-controller="Alojamientos" asp-action="Index">Alojamientos</a></li>
+                                <li><a class="dropdown-item" asp-controller="Habitaciones" asp-action="Index">Habitaciones</a></li>
+                                <li><a class="dropdown-item" asp-controller="Temporadas" asp-action="Index">Temporadas</a></li>
+                                <li><a class="dropdown-item" asp-controller="Tarifas" asp-action="Index">Tarifas</a></li>
+                            </ul>
+                        </li>
+                    }
                 </ul>
                 <div class="d-flex align-items-center">
                     <partial name="_LoginPartial" />

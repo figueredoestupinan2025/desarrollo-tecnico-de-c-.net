@@ -1,4 +1,4 @@
-@model ReservasFondoXYZ.Data.Models.Sitio
+@model ReservasFondoXYZ.Web.ViewModels.CrearSitioViewModel
 
 @{
     ViewData["Title"] = "Crear Sitio";
@@ -45,11 +45,6 @@
                             <label asp-for="CapacidadTotal" class="form-label"></label>
                             <input asp-for="CapacidadTotal" class="form-control" type="number" min="1" />
                             <span asp-validation-for="CapacidadTotal" class="text-danger"></span>
-                        </div>
-                        
-                        <div class="mb-3 form-check">
-                            <input asp-for="Activo" class="form-check-input" />
-                            <label asp-for="Activo" class="form-check-label"></label>
                         </div>
                         
                         <div class="d-flex justify-content-between">

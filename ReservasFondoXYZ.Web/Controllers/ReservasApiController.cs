@@ -21,7 +21,6 @@ public class ReservasApiController : ControllerBase
     }
 
     [HttpGet("sitios")]
-    [AllowAnonymous]
     public async Task<ActionResult<List<Sitio>>> GetSitios()
     {
         var sitios = await _sitioService.ObtenerTodosAsync();
@@ -29,7 +28,6 @@ public class ReservasApiController : ControllerBase
     }
 
     [HttpGet("sitios/{id}")]
-    [AllowAnonymous]
     public async Task<ActionResult<Sitio>> GetSitio(int id)
     {
         var sitio = await _sitioService.ObtenerPorIdAsync(id);
@@ -41,7 +39,6 @@ public class ReservasApiController : ControllerBase
     }
 
     [HttpGet("disponibilidad")]
-    [AllowAnonymous]
     public async Task<ActionResult<List<HabitacionDisponibleDto>>> CheckDisponibilidad([FromQuery] DateTime fechaInicio, [FromQuery] DateTime fechaFin, [FromQuery] int numeroPersonas, [FromQuery] int? sitioId = null)
     {
         if (fechaInicio >= fechaFin)

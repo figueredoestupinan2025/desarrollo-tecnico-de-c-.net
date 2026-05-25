@@ -113,6 +113,7 @@ public class AccountController : Controller
             {
                 _logger.LogInformation("Usuario creó una nueva cuenta con contraseña.");
 
+                await _userManager.AddToRoleAsync(user, "Usuario");
                 await _signInManager.SignInAsync(user, isPersistent: false);
                 return LocalRedirect(returnUrl);
             }
@@ -146,6 +147,11 @@ public class AccountController : Controller
             }
 
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            if (string.IsNullOrWhiteSpace(user.Email))
+            {
+                return RedirectToAction(nameof(ForgotPasswordConfirmation));
+            }
+
             var callbackUrl = Url.Action(nameof(ResetPassword), "Account", new { token, email = user.Email }, protocol: Request.Scheme);
 
             await _emailService.SendEmailAsync(

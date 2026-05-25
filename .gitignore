@@ -61,6 +61,7 @@ bld/
 appsettings*.json
 !appsettings.json
 !appsettings.Development.json
+!appsettings.Docker.json
 
 # Local database
 *.db
@@ -71,3 +72,5 @@ appsettings*.json
 *.swp
 *.swo
 *~
+
+.env

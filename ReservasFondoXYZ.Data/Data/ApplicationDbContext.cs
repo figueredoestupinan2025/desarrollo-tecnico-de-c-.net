@@ -33,6 +33,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 
         modelBuilder.Entity<TipoSitio>(entity =>
         {
+            entity.ToTable("TipoSitio");
             entity.HasIndex(e => e.Nombre).IsUnique();
             entity.HasData(
                 new TipoSitio { Id = 1, Nombre = "Sede Recreativa" },
@@ -42,6 +43,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 
         modelBuilder.Entity<TipoAlojamiento>(entity =>
         {
+            entity.ToTable("TipoAlojamiento");
             entity.HasIndex(e => e.Nombre).IsUnique();
             entity.HasData(
                 new TipoAlojamiento { Id = 1, Nombre = "Habitación" },
@@ -53,6 +55,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 
         modelBuilder.Entity<TipoTemporada>(entity =>
         {
+            entity.ToTable("TipoTemporada");
             entity.HasIndex(e => e.Nombre).IsUnique();
             entity.HasData(
                 new TipoTemporada { Id = 1, Nombre = "Baja Temporada" },
@@ -63,6 +66,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 
         modelBuilder.Entity<EstadoReserva>(entity =>
         {
+            entity.ToTable("EstadoReserva");
             entity.HasIndex(e => e.Nombre).IsUnique();
             entity.HasData(
                 new EstadoReserva { Id = 1, Nombre = "Pendiente" },
@@ -74,6 +78,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 
         modelBuilder.Entity<Sitio>(entity =>
         {
+            entity.ToTable("Sitio");
             entity.HasIndex(e => e.TipoSitioId);
             entity.HasData(
                 new Sitio { Id = 1, Nombre = "Villeta", TipoSitioId = 1, Ubicacion = "Villeta, Cundinamarca", Descripcion = "Sede recreativa con 8 habitaciones, cada una con cama doble y camarote, baño, nevera, televisor y terraza cubierta.", CapacidadTotal = 32, Activo = true },
@@ -89,11 +94,12 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 
         modelBuilder.Entity<Alojamiento>(entity =>
         {
+            entity.ToTable("Alojamiento");
             entity.HasIndex(e => e.SitioId);
             entity.HasIndex(e => e.TipoAlojamientoId);
             entity.HasData(
                 new Alojamiento { Id = 1, SitioId = 1, TipoAlojamientoId = 1, Nombre = "Habitaciones Villeta", Descripcion = "Ocho habitaciones cada una con una alcoba que tiene una cama doble y un camarote, baño, nevera, televisor y terraza cubierta.", CapacidadMaxima = 32, NumeroHabitaciones = 8, Activo = true },
-                new Alojamiento { Id = 2, SitioId = 7, TipoAlojamientoId = 4, Nombre = "Apartamento Suramericana", Descripcion = "Apartamento con 5 habitaciones", CapacidadMaxima = 9, NumeroHabitaciones = 5, Activo = true },
+                new Alojamiento { Id = 2, SitioId = 7, TipoAlojamientoId = 4, Nombre = "Apartamento Suramericana", Descripcion = "Apartamento con 5 habitaciones", CapacidadMaxima = 10, NumeroHabitaciones = 5, Activo = true },
                 new Alojamiento { Id = 3, SitioId = 8, TipoAlojamientoId = 4, Nombre = "Apartamento 202", Descripcion = "Tiene sala comedor, cocina, 2 baños, tres habitaciones y un sitio para parqueo. Capacidad máxima: 8 personas.", CapacidadMaxima = 8, NumeroHabitaciones = 3, Activo = true },
                 new Alojamiento { Id = 4, SitioId = 8, TipoAlojamientoId = 4, Nombre = "Apartamento 301", Descripcion = "Tiene Sala comedor, cocina, 1 baño, dos habitaciones y un sitio para parqueo. Capacidad máxima: 6 personas.", CapacidadMaxima = 6, NumeroHabitaciones = 2, Activo = true },
                 new Alojamiento { Id = 5, SitioId = 8, TipoAlojamientoId = 4, Nombre = "Apartamento 401", Descripcion = "Tiene Sala comedor, cocina, 1 baño, dos habitaciones y un sitio para parqueo. Capacidad máxima: 6 personas.", CapacidadMaxima = 6, NumeroHabitaciones = 2, Activo = true },
@@ -107,6 +113,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 
         modelBuilder.Entity<Habitacion>(entity =>
         {
+            entity.ToTable("Habitacion");
             entity.HasIndex(e => e.AlojamientoId);
             entity.HasData(
                 new Habitacion { Id = 1, AlojamientoId = 1, Numero = "101", Descripcion = "Habitación con cama doble y camarote", CapacidadMaxima = 4, Activo = true },
@@ -121,7 +128,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
                 new Habitacion { Id = 10, AlojamientoId = 2, Numero = "2", Descripcion = "Habitación 2 con 2 camas sencillas", CapacidadMaxima = 2, Activo = true },
                 new Habitacion { Id = 11, AlojamientoId = 2, Numero = "3", Descripcion = "Habitación 3 con 2 camas sencillas", CapacidadMaxima = 2, Activo = true },
                 new Habitacion { Id = 12, AlojamientoId = 2, Numero = "4", Descripcion = "Habitación 4 con 2 camas sencillas", CapacidadMaxima = 2, Activo = true },
-                new Habitacion { Id = 13, AlojamientoId = 2, Numero = "5", Descripcion = "Habitación 5 con 1 cama sencilla y baño privado", CapacidadMaxima = 1, Activo = true },
+                new Habitacion { Id = 13, AlojamientoId = 2, Numero = "5", Descripcion = "Habitación 5 con 1 cama sencilla y baño privado", CapacidadMaxima = 2, Activo = true },
                 new Habitacion { Id = 14, AlojamientoId = 6, Numero = "1", Descripcion = "Habitación 1 con 2 camas sencillas", CapacidadMaxima = 2, Activo = true },
                 new Habitacion { Id = 15, AlojamientoId = 6, Numero = "2", Descripcion = "Habitación 2 con 2 camas sencillas", CapacidadMaxima = 2, Activo = true },
                 new Habitacion { Id = 16, AlojamientoId = 6, Numero = "3", Descripcion = "Habitación 3 con 2 camas sencillas", CapacidadMaxima = 2, Activo = true },
@@ -163,10 +170,12 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 
         modelBuilder.Entity<Temporada>(entity =>
         {
+            entity.ToTable("Temporada");
             entity.HasIndex(e => e.TipoTemporadaId);
             entity.HasData(
-                new Temporada { Id = 1, TipoTemporadaId = 1, Nombre = "Baja Temporada 2026", FechaInicio = new DateTime(2026, 1, 1), FechaFin = new DateTime(2026, 6, 15), Descripcion = "Temporada baja", Activo = true },
-                new Temporada { Id = 2, TipoTemporadaId = 2, Nombre = "Alta Temporada 2026", FechaInicio = new DateTime(2026, 6, 16), FechaFin = new DateTime(2026, 8, 31), Descripcion = "Temporada alta de verano", Activo = true },
+                new Temporada { Id = 1, TipoTemporadaId = 1, Nombre = "Baja Temporada 2026 - Ene-Jun", FechaInicio = new DateTime(2026, 1, 1), FechaFin = new DateTime(2026, 6, 15), Descripcion = "Temporada baja", Activo = true },
+                new Temporada { Id = 2, TipoTemporadaId = 2, Nombre = "Alta Temporada 2026 - Verano", FechaInicio = new DateTime(2026, 6, 16), FechaFin = new DateTime(2026, 8, 31), Descripcion = "Temporada alta de verano", Activo = true },
+                new Temporada { Id = 5, TipoTemporadaId = 1, Nombre = "Baja Temporada 2026 - Sep-Dic", FechaInicio = new DateTime(2026, 9, 1), FechaFin = new DateTime(2026, 12, 14), Descripcion = "Temporada baja septiembre-diciembre", Activo = true },
                 new Temporada { Id = 3, TipoTemporadaId = 2, Nombre = "Alta Temporada Navidad 2026", FechaInicio = new DateTime(2026, 12, 15), FechaFin = new DateTime(2027, 1, 15), Descripcion = "Temporada alta de Navidad", Activo = true },
                 new Temporada { Id = 4, TipoTemporadaId = 3, Nombre = "Tarifa Especial", FechaInicio = new DateTime(2026, 1, 1), FechaFin = new DateTime(2026, 12, 31), Descripcion = "Tarifa especial para días entre semana", Activo = true }
             );
@@ -174,6 +183,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 
         modelBuilder.Entity<Tarifa>(entity =>
         {
+            entity.ToTable("Tarifa");
             entity.HasIndex(e => e.SitioId);
             entity.HasIndex(e => e.AlojamientoId);
             entity.HasIndex(e => e.TipoTemporadaId);
@@ -182,6 +192,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
                 new Tarifa { Id = 2, SitioId = 1, AlojamientoId = null, TipoTemporadaId = 1, NumeroPersonasMin = 1, NumeroPersonasMax = 4, NumeroHabitaciones = 2, PrecioBase = 90000.00m, PrecioPersonaAdicional = 16000.00m, EsTarifaEspecial = false, Descripcion = "Alojamiento 2 habitaciones/noche 1-4 personas", Activo = true },
                 new Tarifa { Id = 3, SitioId = 1, AlojamientoId = null, TipoTemporadaId = 3, NumeroPersonasMin = 1, NumeroPersonasMax = 4, NumeroHabitaciones = 1, PrecioBase = 27000.00m, PrecioPersonaAdicional = 11000.00m, EsTarifaEspecial = true, Descripcion = "Tarifa especial 1 habitación 1-4 personas", Activo = true },
                 new Tarifa { Id = 4, SitioId = 1, AlojamientoId = null, TipoTemporadaId = 3, NumeroPersonasMin = 1, NumeroPersonasMax = 4, NumeroHabitaciones = 2, PrecioBase = 37000.00m, PrecioPersonaAdicional = 11000.00m, EsTarifaEspecial = true, Descripcion = "Tarifa especial 2 habitaciones 1-4 personas", Activo = true },
+                new Tarifa { Id = 23, SitioId = 1, AlojamientoId = null, TipoTemporadaId = 2, NumeroPersonasMin = 1, NumeroPersonasMax = 4, NumeroHabitaciones = 1, PrecioBase = 95000.00m, PrecioPersonaAdicional = 20000.00m, EsTarifaEspecial = false, Descripcion = "Alta temporada - 1 habitación/noche 1-4 personas", Activo = true },
+                new Tarifa { Id = 24, SitioId = 1, AlojamientoId = null, TipoTemporadaId = 2, NumeroPersonasMin = 1, NumeroPersonasMax = 4, NumeroHabitaciones = 2, PrecioBase = 120000.00m, PrecioPersonaAdicional = 20000.00m, EsTarifaEspecial = false, Descripcion = "Alta temporada - 2 habitaciones/noche 1-4 personas", Activo = true },
                 new Tarifa { Id = 5, SitioId = 7, AlojamientoId = 2, TipoTemporadaId = 1, NumeroPersonasMin = 1, NumeroPersonasMax = 1, NumeroHabitaciones = 1, PrecioBase = 63000.00m, PrecioPersonaAdicional = null, EsTarifaEspecial = false, Descripcion = "Habitación/noche una persona", Activo = true },
                 new Tarifa { Id = 6, SitioId = 7, AlojamientoId = 2, TipoTemporadaId = 1, NumeroPersonasMin = 2, NumeroPersonasMax = 2, NumeroHabitaciones = 1, PrecioBase = 75000.00m, PrecioPersonaAdicional = null, EsTarifaEspecial = false, Descripcion = "Habitación/noche dos personas", Activo = true },
                 new Tarifa { Id = 7, SitioId = 8, AlojamientoId = null, TipoTemporadaId = 1, NumeroPersonasMin = 1, NumeroPersonasMax = 6, NumeroHabitaciones = 2, PrecioBase = 89000.00m, PrecioPersonaAdicional = null, EsTarifaEspecial = false, Descripcion = "Baja temporada - Apto 301-401 hasta 6 personas", Activo = true },
@@ -194,12 +206,20 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
                 new Tarifa { Id = 14, SitioId = 7, AlojamientoId = 2, TipoTemporadaId = 2, NumeroPersonasMin = 1, NumeroPersonasMax = 2, NumeroHabitaciones = 1, PrecioBase = 88000.00m, PrecioPersonaAdicional = null, EsTarifaEspecial = false, Descripcion = "Alta temporada - Suramericana habitación 1-2 personas", Activo = true },
                 new Tarifa { Id = 15, SitioId = 2, AlojamientoId = 7, TipoTemporadaId = 1, NumeroPersonasMin = 1, NumeroPersonasMax = 4, NumeroHabitaciones = 1, PrecioBase = 65000.00m, PrecioPersonaAdicional = 15000.00m, EsTarifaEspecial = false, Descripcion = "Baja temporada - El Placer habitación 1-4 personas", Activo = true },
                 new Tarifa { Id = 16, SitioId = 2, AlojamientoId = 7, TipoTemporadaId = 2, NumeroPersonasMin = 1, NumeroPersonasMax = 4, NumeroHabitaciones = 1, PrecioBase = 90000.00m, PrecioPersonaAdicional = 20000.00m, EsTarifaEspecial = false, Descripcion = "Alta temporada - El Placer habitación 1-4 personas", Activo = true },
+                new Tarifa { Id = 25, SitioId = 2, AlojamientoId = 7, TipoTemporadaId = 1, NumeroPersonasMin = 1, NumeroPersonasMax = 4, NumeroHabitaciones = 2, PrecioBase = 85000.00m, PrecioPersonaAdicional = 15000.00m, EsTarifaEspecial = false, Descripcion = "Baja temporada - El Placer 2 habitaciones 1-4 personas", Activo = true },
+                new Tarifa { Id = 26, SitioId = 2, AlojamientoId = 7, TipoTemporadaId = 2, NumeroPersonasMin = 1, NumeroPersonasMax = 4, NumeroHabitaciones = 2, PrecioBase = 120000.00m, PrecioPersonaAdicional = 20000.00m, EsTarifaEspecial = false, Descripcion = "Alta temporada - El Placer 2 habitaciones 1-4 personas", Activo = true },
                 new Tarifa { Id = 17, SitioId = 3, AlojamientoId = 8, TipoTemporadaId = 1, NumeroPersonasMin = 1, NumeroPersonasMax = 4, NumeroHabitaciones = 1, PrecioBase = 60000.00m, PrecioPersonaAdicional = 14000.00m, EsTarifaEspecial = false, Descripcion = "Baja temporada - Gonzalo Morante habitación 1-4 personas", Activo = true },
                 new Tarifa { Id = 18, SitioId = 3, AlojamientoId = 8, TipoTemporadaId = 2, NumeroPersonasMin = 1, NumeroPersonasMax = 4, NumeroHabitaciones = 1, PrecioBase = 85000.00m, PrecioPersonaAdicional = 19000.00m, EsTarifaEspecial = false, Descripcion = "Alta temporada - Gonzalo Morante habitación 1-4 personas", Activo = true },
+                new Tarifa { Id = 27, SitioId = 3, AlojamientoId = 8, TipoTemporadaId = 1, NumeroPersonasMin = 1, NumeroPersonasMax = 4, NumeroHabitaciones = 2, PrecioBase = 78000.00m, PrecioPersonaAdicional = 14000.00m, EsTarifaEspecial = false, Descripcion = "Baja temporada - Gonzalo Morante 2 habitaciones 1-4 personas", Activo = true },
+                new Tarifa { Id = 28, SitioId = 3, AlojamientoId = 8, TipoTemporadaId = 2, NumeroPersonasMin = 1, NumeroPersonasMax = 4, NumeroHabitaciones = 2, PrecioBase = 110000.00m, PrecioPersonaAdicional = 19000.00m, EsTarifaEspecial = false, Descripcion = "Alta temporada - Gonzalo Morante 2 habitaciones 1-4 personas", Activo = true },
                 new Tarifa { Id = 19, SitioId = 4, AlojamientoId = 9, TipoTemporadaId = 1, NumeroPersonasMin = 1, NumeroPersonasMax = 4, NumeroHabitaciones = 1, PrecioBase = 58000.00m, PrecioPersonaAdicional = 13000.00m, EsTarifaEspecial = false, Descripcion = "Baja temporada - Tablones habitación 1-4 personas", Activo = true },
                 new Tarifa { Id = 20, SitioId = 4, AlojamientoId = 9, TipoTemporadaId = 2, NumeroPersonasMin = 1, NumeroPersonasMax = 4, NumeroHabitaciones = 1, PrecioBase = 82000.00m, PrecioPersonaAdicional = 18000.00m, EsTarifaEspecial = false, Descripcion = "Alta temporada - Tablones habitación 1-4 personas", Activo = true },
+                new Tarifa { Id = 29, SitioId = 4, AlojamientoId = 9, TipoTemporadaId = 1, NumeroPersonasMin = 1, NumeroPersonasMax = 4, NumeroHabitaciones = 2, PrecioBase = 75000.00m, PrecioPersonaAdicional = 13000.00m, EsTarifaEspecial = false, Descripcion = "Baja temporada - Tablones 2 habitaciones 1-4 personas", Activo = true },
+                new Tarifa { Id = 30, SitioId = 4, AlojamientoId = 9, TipoTemporadaId = 2, NumeroPersonasMin = 1, NumeroPersonasMax = 4, NumeroHabitaciones = 2, PrecioBase = 106000.00m, PrecioPersonaAdicional = 18000.00m, EsTarifaEspecial = false, Descripcion = "Alta temporada - Tablones 2 habitaciones 1-4 personas", Activo = true },
                 new Tarifa { Id = 21, SitioId = 5, AlojamientoId = 10, TipoTemporadaId = 1, NumeroPersonasMin = 1, NumeroPersonasMax = 4, NumeroHabitaciones = 1, PrecioBase = 72000.00m, PrecioPersonaAdicional = 17000.00m, EsTarifaEspecial = false, Descripcion = "Baja temporada - Manguruma habitación 1-4 personas", Activo = true },
-                new Tarifa { Id = 22, SitioId = 5, AlojamientoId = 10, TipoTemporadaId = 2, NumeroPersonasMin = 1, NumeroPersonasMax = 4, NumeroHabitaciones = 1, PrecioBase = 100000.00m, PrecioPersonaAdicional = 22000.00m, EsTarifaEspecial = false, Descripcion = "Alta temporada - Manguruma habitación 1-4 personas", Activo = true }
+                new Tarifa { Id = 22, SitioId = 5, AlojamientoId = 10, TipoTemporadaId = 2, NumeroPersonasMin = 1, NumeroPersonasMax = 4, NumeroHabitaciones = 1, PrecioBase = 100000.00m, PrecioPersonaAdicional = 22000.00m, EsTarifaEspecial = false, Descripcion = "Alta temporada - Manguruma habitación 1-4 personas", Activo = true },
+                new Tarifa { Id = 31, SitioId = 5, AlojamientoId = 10, TipoTemporadaId = 1, NumeroPersonasMin = 1, NumeroPersonasMax = 4, NumeroHabitaciones = 2, PrecioBase = 92000.00m, PrecioPersonaAdicional = 17000.00m, EsTarifaEspecial = false, Descripcion = "Baja temporada - Manguruma 2 habitaciones 1-4 personas", Activo = true },
+                new Tarifa { Id = 32, SitioId = 5, AlojamientoId = 10, TipoTemporadaId = 2, NumeroPersonasMin = 1, NumeroPersonasMax = 4, NumeroHabitaciones = 2, PrecioBase = 130000.00m, PrecioPersonaAdicional = 22000.00m, EsTarifaEspecial = false, Descripcion = "Alta temporada - Manguruma 2 habitaciones 1-4 personas", Activo = true }
             );
         });
 
@@ -207,6 +227,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 
         modelBuilder.Entity<Reserva>(entity =>
         {
+            entity.ToTable("Reserva");
             entity.HasIndex(e => e.UsuarioId);
             entity.HasIndex(e => e.SitioId);
             entity.HasIndex(e => e.AlojamientoId);
@@ -216,6 +237,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 
         modelBuilder.Entity<ReservaHabitacion>(entity =>
         {
+            entity.ToTable("ReservaHabitacion");
             entity.HasIndex(e => e.ReservaId);
             entity.HasIndex(e => e.HabitacionId);
         });

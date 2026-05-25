@@ -17,6 +17,7 @@
                     <th>Alojamiento</th>
                     <th>Fechas</th>
                     <th>Personas</th>
+                    <th>Habitaciones</th>
                     <th>Tarifa Total</th>
                     <th>Estado</th>
                     <th></th>
@@ -31,6 +32,16 @@
                         <td>@reserva.Alojamiento?.Nombre</td>
                         <td>@reserva.FechaInicio.ToString("dd/MM/yyyy") - @reserva.FechaFin.ToString("dd/MM/yyyy")</td>
                         <td>@reserva.NumeroPersonas</td>
+                        <td>
+                            @if (reserva.ReservaHabitaciones.Any())
+                            {
+                                @string.Join(", ", reserva.ReservaHabitaciones.Select(rh => rh.Habitacion?.Numero))
+                            }
+                            else
+                            {
+                                @reserva.NumeroHabitaciones
+                            }
+                        </td>
                         <td>$@reserva.TarifaTotal.ToString("N0")</td>
                         <td>@reserva.EstadoReserva?.Nombre</td>
                         <td>

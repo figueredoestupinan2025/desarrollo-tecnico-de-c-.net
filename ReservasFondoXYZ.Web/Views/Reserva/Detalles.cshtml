@@ -27,6 +27,18 @@
             <dt class="col-sm-3">Número de Habitaciones</dt>
             <dd class="col-sm-9">@Model.NumeroHabitaciones</dd>
 
+            <dt class="col-sm-3">Habitaciones</dt>
+            <dd class="col-sm-9">
+                @if (Model.ReservaHabitaciones.Any())
+                {
+                    @string.Join(", ", Model.ReservaHabitaciones.Select(rh => rh.Habitacion?.Numero))
+                }
+                else
+                {
+                    <span>No registradas</span>
+                }
+            </dd>
+
             <dt class="col-sm-3">Tarifa Total</dt>
             <dd class="col-sm-9">$@Model.TarifaTotal.ToString("N0")</dd>
 

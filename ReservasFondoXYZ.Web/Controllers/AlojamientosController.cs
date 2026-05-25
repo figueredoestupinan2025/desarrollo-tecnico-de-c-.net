@@ -6,7 +6,7 @@ using ReservasFondoXYZ.Web.ViewModels;
 
 namespace ReservasFondoXYZ.Web.Controllers;
 
-[Authorize]
+[Authorize(Roles = "Admin")]
 public class AlojamientosController : Controller
 {
     private readonly IAlojamientoService _alojamientoService;

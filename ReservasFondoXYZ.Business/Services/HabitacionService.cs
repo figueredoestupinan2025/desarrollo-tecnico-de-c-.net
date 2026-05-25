@@ -16,7 +16,7 @@ public class HabitacionService : IHabitacionService
     public async Task<List<Habitacion>> ObtenerTodosAsync()
     {
         return await _context.Habitaciones
-            .Include(h => h.Alojamiento).ThenInclude(a => a.Sitio)
+            .Include(h => h.Alojamiento!).ThenInclude(a => a.Sitio)
             .Where(h => h.Activo)
             .ToListAsync();
     }
@@ -24,7 +24,7 @@ public class HabitacionService : IHabitacionService
     public async Task<Habitacion?> ObtenerPorIdAsync(int id)
     {
         return await _context.Habitaciones
-            .Include(h => h.Alojamiento).ThenInclude(a => a.Sitio)
+            .Include(h => h.Alojamiento!).ThenInclude(a => a.Sitio)
             .FirstOrDefaultAsync(h => h.Id == id && h.Activo);
     }
 
@@ -54,6 +54,16 @@ public class HabitacionService : IHabitacionService
         var habitacion = await _context.Habitaciones.FindAsync(id);
         if (habitacion == null)
             return false;
+
+        var tieneReservasActivas = await _context.ReservasHabitaciones
+            .Include(rh => rh.Reserva)
+            .AnyAsync(rh => rh.HabitacionId == id && 
+                          rh.Reserva != null &&
+                          rh.Reserva.EstadoReservaId != 3 && 
+                          rh.Reserva.FechaFin >= DateTime.Today);
+
+        if (tieneReservasActivas)
+            throw new InvalidOperationException("No se puede desactivar la habitación porque tiene reservas futuras activas.");
 
         habitacion.Activo = false;
         await _context.SaveChangesAsync();

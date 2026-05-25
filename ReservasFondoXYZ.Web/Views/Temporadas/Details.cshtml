@@ -1,0 +1,22 @@
+@model ReservasFondoXYZ.Data.Models.Temporada
+
+@{
+    ViewData["Title"] = "Detalle de Temporada";
+}
+
+<h1>Detalle de Temporada</h1>
+
+<div class="card">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Nombre</dt><dd class="col-sm-9">@Model.Nombre</dd>
+            <dt class="col-sm-3">Tipo</dt><dd class="col-sm-9">@Model.TipoTemporada?.Nombre</dd>
+            <dt class="col-sm-3">Fecha inicio</dt><dd class="col-sm-9">@Model.FechaInicio.ToString("dd/MM/yyyy")</dd>
+            <dt class="col-sm-3">Fecha fin</dt><dd class="col-sm-9">@Model.FechaFin.ToString("dd/MM/yyyy")</dd>
+            <dt class="col-sm-3">Activa</dt><dd class="col-sm-9">@(Model.Activo ? "Sí" : "No")</dd>
+            <dt class="col-sm-3">Descripción</dt><dd class="col-sm-9">@Model.Descripcion</dd>
+        </dl>
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Editar</a>
+        <a asp-action="Index" class="btn btn-secondary">Volver</a>
+    </div>
+</div>

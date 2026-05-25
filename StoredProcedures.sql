@@ -121,7 +121,22 @@ BEGIN
     WHERE t.Activo = 1
       AND t.SitioId = @SitioId
       AND t.TipoTemporadaId = @TipoTemporadaId
-      AND @NumeroPersonas BETWEEN t.NumeroPersonasMin AND t.NumeroPersonasMax
+      AND @NumeroPersonas >= t.NumeroPersonasMin
+      AND (
+            @NumeroPersonas <= t.NumeroPersonasMax
+            OR (
+                @NumeroPersonas > t.NumeroPersonasMax
+                AND t.NumeroPersonasMax = (
+                    SELECT MAX(t2.NumeroPersonasMax)
+                    FROM Tarifa t2
+                    WHERE t2.Activo = 1
+                      AND t2.SitioId = @SitioId
+                      AND t2.TipoTemporadaId = @TipoTemporadaId
+                      AND t2.NumeroHabitaciones = t.NumeroHabitaciones
+                      AND (t2.AlojamientoId IS NULL OR t2.AlojamientoId = @AlojamientoId)
+                )
+            )
+      )
       AND (t.AlojamientoId IS NULL OR t.AlojamientoId = @AlojamientoId)
     ORDER BY t.EsTarifaEspecial, t.PrecioBase;
 END
@@ -167,9 +182,13 @@ BEGIN
       AND t.SitioId = @SitioId
       AND t.TipoTemporadaId = @TipoTemporadaId
       AND t.NumeroHabitaciones = @NumeroHabitaciones
-      AND @NumeroPersonas BETWEEN t.NumeroPersonasMin AND t.NumeroPersonasMax
+      AND @NumeroPersonas >= t.NumeroPersonasMin
       AND (t.AlojamientoId IS NULL OR t.AlojamientoId = @AlojamientoId)
-    ORDER BY t.EsTarifaEspecial, t.PrecioBase;
+    ORDER BY
+        CASE WHEN @NumeroPersonas <= t.NumeroPersonasMax THEN 0 ELSE 1 END,
+        CASE WHEN @NumeroPersonas <= t.NumeroPersonasMax THEN t.NumeroPersonasMax ELSE -t.NumeroPersonasMax END,
+        t.EsTarifaEspecial,
+        t.PrecioBase;
     
     IF @PrecioBase IS NULL
     BEGIN
@@ -182,7 +201,7 @@ BEGIN
         ELSE 0
     END;
     
-    SET @TarifaTotal = (@PrecioBase + (@PersonasAdicionales * @PrecioPersonaAdicional)) * @NumeroNoches;
+    SET @TarifaTotal = (@PrecioBase + (@PersonasAdicionales * @PrecioPersonaAdicional)) * @NumeroNoches * @NumeroHabitaciones;
 END
 GO
 

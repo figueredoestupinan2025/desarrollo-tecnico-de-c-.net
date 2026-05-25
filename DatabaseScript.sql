@@ -141,6 +141,18 @@ CREATE TABLE AspNetRoles (
 GO
 
 -- =============================================
+-- Tabla: AspNetRoleClaims (Identity)
+-- =============================================
+CREATE TABLE AspNetRoleClaims (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    RoleId NVARCHAR(450) NOT NULL,
+    ClaimType NVARCHAR(MAX) NULL,
+    ClaimValue NVARCHAR(MAX) NULL,
+    FOREIGN KEY (RoleId) REFERENCES AspNetRoles(Id)
+);
+GO
+
+-- =============================================
 -- Tabla: AspNetUsers (Identity)
 -- =============================================
 CREATE TABLE AspNetUsers (

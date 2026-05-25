@@ -1,0 +1,290 @@
+
+
+===== PAGE 1 =====
+
+Prueba Técnica 
+ 
+ 
+ 
+PRUEBA TÉCNICA:  
+ANALISTA DESARROLADOR .NET 
+ 
+Descripción: 
+ 
+Para el Fondo XYZ el bienestar de los asociados y su grupo familiar es uno de sus objetivos 
+fundamentales.  A través de los años el Fondo ha adquirido, construido o adaptado, tanto 
+Sedes r ecreativas como apartamentos propios en las diferentes regionales , que les 
+permitan a los usuarios el uso de instalaciones adecuadas para las prácticas deportivas, 
+el turismo y el ocio recreativo. 
+ 
+Actualmente tiene en su  página web para información de sus asociados  la ubicación y 
+descripción de cada uno de estos sitios. 
+ 
+ 
+Necesidad: 
+ 
+La Fondo XYZ requiere que sus asociados a través de su página web puedan ver la 
+disponibilidad en los diferentes sitios turísticos  que se ofrecen según las fechas en las 
+cuales desean hacer uso de sus instalaciones, que puedan realizar sus reservas y pagar 
+en línea. 
+ 
+ 
+Análisis de la necesidad: 
+ 
+El usuario debe poder a través del sistema de reservas:  
+ 
+• Consultar cada uno de los lugares 
+• Ver la disponibilidad del sitio (Sedes recreativas y Apartamentos) de acuerdo a la 
+fecha en que desea viajar.  
+• Ver las tarifas de acuerdo a l sitio, la temporada , el número de personas y de  
+acuerdo al alojamiento elegido. 
+• Realizar el cálculo de la tarifa  a cancelar  de acuerdo al sitio, número  de 
+habitaciones que necesita utilizar, el número de personas, al tipo de alojamiento 
+y/o apartamento y a la temporada. 
+ 
+ 
+Variables a tener en cuenta: 
+ 
+• Cupo máximo de personas en cada sede 
+• Número de habitaciones 
+• Disponibilidad del alojamiento elegido según las fechas (que días están 
+ocupados o disponibles) 
+
+===== PAGE 2 =====
+
+Prueba Técnica 
+ 
+• Tarifas según la temporada, la sede, el tipo de Alojamiento y/o el apartamento, 
+el número de personas. 
+ 
+ 
+Información actual en la página Web de las sedes recreativas: 
+ 
+ 
+Sedes recreativas 
+• Villeta 
+• Fusagasugá 
+• Chinchiná  
+• Palmira 
+• Santa fe de Antioquia 
+• Bogotá 
+ 
+ 
+Apartamentos 
+ 
+Medellín 
+• Habitación 1 con 2 camas sencillas y baño privado. 
+• Habitaciones 2, 3 y 4 cada una con 2 camas sencillas. 
+• Habitación 5 con 1 cama sencilla y baño privado. 
+ 
+ 
+Santa Marta 
+ 
+• Apartamento 202. Tiene sala comedor, cocina, 2 baños, tres habitaciones y un 
+sitio para parqueo. Capacidad máxima: 8 personas.  
+• Apartamento 301. Tiene Sala comedor, cocina, 1 baño, dos habitaciones y un sitio 
+para parqueo. Capacidad máxima: 6 personas.  
+• Apartamento 401. Tiene Sala comedor, cocina, 1 baño, dos habitaciones y un sitio 
+para parqueo. Capacidad máxima: 6 personas. 
+ 
+Sedes Recreativas 
+ 
+• Nombre de la Sede: Villeta 
+o Habitaciones de la sede: Ocho habitaciones cada una con una alcoba que 
+tiene una cama doble y un camarote, baño, nevera, televisor y terraza 
+cubierta. 
+o Capacidad total: hasta32 personas 
+ 
+ 
+• Nombre de la Sede: El placer – Fusagasugá 
+o Alojamientos 
+Numero 1: tiene dos habitaciones, baño y Televisor, una con cama doble 
+y una sencilla, la otra con una cama sencilla. 
+Número 2: tiene dos habitaciones, baño y Televisor, una con cama doble, 
+
+===== PAGE 3 =====
+
+Prueba Técnica 
+ 
+la otra con 4 camas sencillas. 
+Número 3: tiene una habitación con cama doble y 2 camas sencillas, 
+baño y Televisor. 
+Número 4: tiene dos habitaciones, baño y Televisor, una con cama doble 
+y una sencilla, la otra con una cama sencilla. 
+Capacidad hasta 18 personas. 
+ 
+o Bloque de cabañas 
+Cuatro unidades numeradas de la 5 a la 8, cada una tiene: sala de estar 
+con sofá cama y Televisor, baño, habitación con cama doble y una cama 
+sencilla, cocineta equipada y nevera, terraza comedor. 
+Capacidad hasta 16 personas. 
+ 
+o Capacidad total de alojamiento total de la sede: Hasta 34 personas. 
+ 
+ 
+• Nombre de la Sede: Gonzalo Morante - Chinchiná 
+o Alojamientos 
+Número 1. Tiene cocineta, baño, Televisor y 2 habitaciones. La 1 con dos 
+camas sencillas, mas dos adicionales. La 2 con una cama doble y una 
+sencilla. 
+Número 2. Tiene cocineta, baño, Televisor y 2 habitaciones. La 1 con una 
+cama doble, mas una auxiliar doble. La 2 con dos camas sencillas, mas dos 
+auxiliares. 
+Número 4.  Tiene cocineta, baño, Televisor y una habitación con cama 
+doble y una cama sencilla. 
+ 
+o Bloque de cabañas 
+Una Tipo A 
+Alojamiento 3.  Cocineta, dos baños, sala comedor, Televisor y dos 
+habitaciones. La 1 con cama doble. La 2 con dos camas sencillas, mas dos 
+auxiliares. 
+ 
+ 
+Dos tipo B 
+Alojamiento 5. Cocineta, baño, sala con sofá, Televisor una habitación con 
+cama doble y una cama sencilla. 
+Alojamiento 6. Cocineta, baño, sala con sofá, Televisor, una habitación con 
+cama doble y una cama sencilla. 
+ 
+o Capacidad total para hospedaje: hasta 30 personas. 
+ 
+ 
+• Nombre de la Sede: Tablones – Palmira 
+o Alojamientos 
+Número 1. Una habitación, con cama doble y un camarote. Televisor, 
+baño, cocineta con nevera, comedor. 
+
+===== PAGE 4 =====
+
+Prueba Técnica 
+ 
+Número 2. Una habitación, con cama doble y un camarote. Televisor, baño 
+y cocineta con nevera, comedor. 
+Número 3. Dos habitaciones. La habitación 1 con cama doble y un 
+camarote. La habitación 2 con dos camarotes. Sala de estar con Televisor, 
+baño y cocineta. 
+Número 4. Dos habitaciones. La habitación 1 con cama doble y un 
+camarote. La habitación 2 con dos camarotes. Sala de estar con Televisor, 
+baño y cocineta. 
+ 
+o Capacidad total para hospedaje: 24 personas 
+ 
+ 
+• Nombre de la Sede: Manguruma – Santa fe de Antioquia  
+o Alojamientos 
+Número 1: Una cama doble y un camarote. Baño y terraza. Televisor 
+Número 2: Una cama doble, un camarote y un sofá- cama. Baño y terraza. 
+Televisor. 
+Número 3: Una cama doble, un camarote y un sofá- cama. Baño y terraza. 
+Televisor 
+Capacidad: Hasta 14 personas 
+ 
+o Bloque Nuevo 
+Ocho alojamientos . Cada uno con una habitación que tiene dos camas 
+gemelas y un camarote; baño, terraza - comedor y cocina. Nevera y 
+televisor. 
+Capacidad: Hasta 32 personas. 
+ 
+o La capacidad total de la sede: 46 personas. 
+• Nombre de la Sede: Federman - Bogotá 
+o Habitaciones de la sede: Ocho habitaciones cada una con una alcoba 
+Servicios de la sede 
+Zona húmeda: Baño turco, sauna, jacuzzi, baños y vestieres 
+Gimnasio sala de masajes 
+Billar y juegos de mesa 
+Salas de música y video, lectura. Cafetería y sala social. 
+Ejercicios: Bicicleta estática, Aerobicos, Pilates Y Rumba tropical (Lunes a 
+viernes 5:30 a 6:30 p.m.) 
+Cuenta con 4 habitaciones para alojamiento de los asociados. 
+ 
+Tarifas 
+ 
+Apartamentos 
+Suramericana, Medellín.  
+· Habitacion / Noche Una Persona $63.000 
+Dos personas $75.000 
+ 
+ 
+
+===== PAGE 5 =====
+
+Prueba Técnica 
+ 
+El Rodadero, Santa Marta. 
+· Baja Temporada / Apto-noche Ap 301-401 (Hasta 6 Personas) $89.000 
+     Ap 202 (Hasta 8 Personas) $103.000 
+· Alta Temporada / Apto-noche Ap 301-401 (Hasta 6 Personas) $124.000 
+     Ap 202 (Hasta 8 Personas) $143.000 
+ 
+· Servicio de Lavandería $18.000  
+ 
+ 
+Sedes Recreativas  
+ 
+Villeta, El Placer (Fusagasugá), Manguruma (santafe de Antioquia), Gonzalo Morante 
+(Mnz), y Tablones (Palmira). 
+Alojamiento (1) Habitación / noche 1 – 4 Personas $70.000 
+Alojamiento (2) Habitaciones / noche 1 – 4 Personas $90.000 
+Persona Adicional $16.000 
+Los Alojamientos nuevos de El Placer y Manguruma tienen la misma tarifa de dos 
+habitaciones 
+ 
+Tarifa especial  
+$27.000 y $37.000, respectivamente para 1-4 personas, y $11.000 por persona 
+adicional. LUNES a JUEVES, excepto festivos, semana escolar y alta temporada. 
+ 
+Visita Día – Acompañantes (Villeta, El Placer, Manguruma, Gonzalo Morante, y 
+Tablones). 
+ 
+Cada Acompañante (A partir del 5° y hasta máx. 10) $5.500 
+ 
+ 
+  
+
+===== PAGE 6 =====
+
+Prueba Técnica 
+ 
+Se requiere para esta prueba: 
+ 
+• Crear la estructura de la BD Relacional en Ms SQL Server 
+• Elaborar un sp (procedimiento almacenando) que permita encontrar habitaciones 
+disponibles en un rango de fechas. 
+• Elaborar un sp (procedimiento almacenando) que permita encontrar habitaciones 
+disponibles en un rango de fechas, un número de personas  
+• Elaborar un sp (proced imiento almacenando) que permita Ver las tarifas  de 
+acuerdo al sitio, la temporada, el número de personas y de acuerdo al alojamiento 
+elegido. 
+• Elaborar un sp (procedimiento almacenando) que permita Realizar el cálculo de 
+la tarifa a cancelar  de acuerdo al sitio, número de habitaciones que necesita 
+utilizar, el número de personas, al tipo de alojamiento y/o apartamento y a la 
+temporada. 
+ 
+En las siguiente url puede ver el login del aplicativo. 
+ 
+https://reservaenlinea.fodun.com.co/ 
+ 
+  Elaborar el diseño de los formularios web de acuerdo las necesidades planteadas. 
+• Crear formulario funcional del Registro de usuarios. 
+• Crear el Login (solo usuarios autenticados podrán usar el aplicativo)  
+• Envío de recordación de contraseña al correo por medio de notificación SMTP. 
+• Desarrollar el crud de algunos formularios. 
+• Desarrollar un formulario para Consultar disponibilidad de reservas en un rango 
+de fechas Y haciendo uso de los procedimientos almacenados (sp) solicitados 
+elaborar previamente. 
+• Se debe poder crear y guardar una reservar y posteriormente consultar las 
+reservas y/o disponibilidad de un apartamento. 
+ 
+ 
+El desarrollo  debe ser bajo base de datos  Microsoft SQL Ser ver y visual 
+studio usando  C# bajo .net framework  o .net core  
+Modelo MVC, programación en capas , usar entity framework, para la 
+seguridad se recomienda usar .net Identity. 
+ 
+No es tan importante el Frond End, es más importante el 
+Backend. 
+ 
+Se debe enviar el proyecto y la base de datos para revisar el 
+código. 
+ 
+ 

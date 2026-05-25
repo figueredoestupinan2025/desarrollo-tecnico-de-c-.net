@@ -23,33 +23,49 @@
                     <strong>Número de Personas:</strong> @Model.NumeroPersonas<br>
                     <strong>Número de Habitaciones:</strong> @Model.NumeroHabitaciones
                 </p>
+                @if (Model.HabitacionesSeleccionadas.Any())
+                {
+                    <ul class="list-group list-group-flush mb-3">
+                        @foreach (var habitacion in Model.HabitacionesSeleccionadas)
+                        {
+                            <li class="list-group-item px-0">
+                                Habitación @habitacion.Numero - capacidad @habitacion.CapacidadMaxima
+                            </li>
+                        }
+                    </ul>
+                }
                 <div class="alert alert-success">
                     <strong>Tarifa Total:</strong> $@Model.TarifaTotal.ToString("N0")
                 </div>
             </div>
         </div>
     </div>
-    
+
     <div class="col-md-6">
         <div class="card mb-4">
             <div class="card-header" style="background-color: #8B0000; color: white;">
-                <h5><i class="bi bi-credit-card"></i> Información de Pago</h5>
+                <h5>Información de Pago</h5>
             </div>
             <div class="card-body">
-                <form method="post" asp-action="Pago">
+                <form id="paymentForm" method="post" asp-action="Pago">
                     <div asp-validation-summary="All" class="text-danger mb-3"></div>
-                    
+
                     <input type="hidden" asp-for="SitioId" />
                     <input type="hidden" asp-for="AlojamientoId" />
                     <input type="hidden" asp-for="FechaInicio" />
                     <input type="hidden" asp-for="FechaFin" />
                     <input type="hidden" asp-for="NumeroPersonas" />
                     <input type="hidden" asp-for="NumeroHabitaciones" />
+                    <input type="hidden" asp-for="HabitacionId" />
+                    @foreach (var habitacionId in Model.HabitacionesIds)
+                    {
+                        <input type="hidden" name="HabitacionesIds" value="@habitacionId" />
+                    }
                     <input type="hidden" asp-for="TarifaTotal" />
 
                     <div class="mb-3">
                         <label asp-for="NumeroTarjeta" class="form-label"></label>
-                        <input asp-for="NumeroTarjeta" class="form-control" placeholder="1234 5678 9012 3456" maxlength="16" />
+                        <input asp-for="NumeroTarjeta" class="form-control" placeholder="1234567890123456" maxlength="16" />
                         <span asp-validation-for="NumeroTarjeta" class="text-danger"></span>
                     </div>
 
@@ -73,18 +89,12 @@
                     </div>
 
                     <div class="alert alert-info small">
-                        <i class="bi bi-info-circle"></i> Este es un sistema de pago simulado. Los datos de la tarjeta no se guardan ni se envían a ningún procesador de pagos real.
+                        Este es un sistema de pago simulado. Los datos de la tarjeta no se guardan ni se envían a ningún procesador de pagos real.
                     </div>
 
-                    <div class="d-flex gap-2">
-                        <button type="submit" class="btn btn-success w-100">
-                            <i class="bi bi-check-circle"></i> Confirmar Pago y Reserva
-                        </button>
-                    </div>
+                    <button type="submit" class="btn btn-success w-100">Confirmar Pago y Reserva</button>
                 </form>
-                <a asp-action="Disponibilidad" class="btn btn-secondary w-100 mt-2">
-                    <i class="bi bi-x-circle"></i> Cancelar
-                </a>
+                <a asp-action="Disponibilidad" class="btn btn-secondary w-100 mt-2">Cancelar</a>
             </div>
         </div>
     </div>
@@ -94,4 +104,17 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('paymentForm');
+            if (!form) {
+                return;
+            }
+            const submitBtn = form.querySelector('button[type="submit"]');
+            form.addEventListener('submit', function () {
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Procesando...';
+            });
+        });
+    </script>
 }

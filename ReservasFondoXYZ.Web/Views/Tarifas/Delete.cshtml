@@ -1,0 +1,15 @@
+@model ReservasFondoXYZ.Data.Models.Tarifa
+
+@{
+    ViewData["Title"] = "Eliminar Tarifa";
+}
+
+<h1>Eliminar Tarifa</h1>
+<div class="alert alert-warning">La tarifa se desactivará para conservar histórico.</div>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+    <p><strong>@Model.Sitio?.Nombre</strong> - @(Model.Alojamiento?.Nombre ?? "General") - $@Model.PrecioBase.ToString("N0")</p>
+    <button type="submit" class="btn btn-danger">Desactivar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>

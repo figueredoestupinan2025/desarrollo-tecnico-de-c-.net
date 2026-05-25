@@ -15,24 +15,32 @@ public class EmailService : IEmailService
 
     public async Task SendEmailAsync(string toEmail, string subject, string message)
     {
-        var smtpSettings = _configuration.GetSection("SmtpSettings");
-        
-        using var client = new SmtpClient(smtpSettings["Host"], int.Parse(smtpSettings["Port"] ?? "587"))
+        try
         {
-            Credentials = new NetworkCredential(smtpSettings["UserName"], smtpSettings["Password"]),
-            EnableSsl = bool.Parse(smtpSettings["EnableSsl"] ?? "true")
-        };
+            var smtpSettings = _configuration.GetSection("SmtpSettings");
+            
+            using var client = new SmtpClient(smtpSettings["Host"], int.Parse(smtpSettings["Port"] ?? "587"))
+            {
+                Credentials = new NetworkCredential(smtpSettings["UserName"], smtpSettings["Password"]),
+                EnableSsl = bool.Parse(smtpSettings["EnableSsl"] ?? "true")
+            };
 
-        var mailMessage = new MailMessage
+            var mailMessage = new MailMessage
+            {
+                From = new MailAddress(smtpSettings["FromEmail"] ?? "no-reply@example.com"),
+                Subject = subject,
+                Body = message,
+                IsBodyHtml = true
+            };
+
+            mailMessage.To.Add(toEmail);
+
+            await client.SendMailAsync(mailMessage);
+        }
+        catch (Exception ex)
         {
-            From = new MailAddress(smtpSettings["FromEmail"] ?? "no-reply@example.com"),
-            Subject = subject,
-            Body = message,
-            IsBodyHtml = true
-        };
-
-        mailMessage.To.Add(toEmail);
-
-        await client.SendMailAsync(mailMessage);
+            Console.WriteLine($"Error al enviar correo: {ex.Message}");
+            throw new InvalidOperationException("No se pudo enviar el correo electrónico. Por favor, intente más tarde.", ex);
+        }
     }
 }

@@ -2,10 +2,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ReservasFondoXYZ.Business.Services;
 using ReservasFondoXYZ.Data.Models;
+using ReservasFondoXYZ.Web.ViewModels;
 
 namespace ReservasFondoXYZ.Web.Controllers;
 
-[Authorize]
+[Authorize(Roles = "Admin")]
 public class SitiosController : Controller
 {
     private readonly ISitioService _sitioService;
@@ -50,16 +51,26 @@ public class SitiosController : Controller
     // POST: Sitios/Create
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(Sitio sitio)
+    public async Task<IActionResult> Create(CrearSitioViewModel viewModel)
     {
         if (ModelState.IsValid)
         {
+            var sitio = new Sitio
+            {
+                TipoSitioId = viewModel.TipoSitioId,
+                Nombre = viewModel.Nombre,
+                Ubicacion = viewModel.Ubicacion,
+                Descripcion = viewModel.Descripcion,
+                CapacidadTotal = viewModel.CapacidadTotal,
+                Activo = true
+            };
+            
             await _sitioService.CrearAsync(sitio);
             return RedirectToAction(nameof(Index));
         }
         var tiposSitio = await _sitioService.ObtenerTiposSitioAsync();
-        ViewBag.TipoSitioId = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(tiposSitio, "Id", "Nombre", sitio.TipoSitioId);
-        return View(sitio);
+        ViewBag.TipoSitioId = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(tiposSitio, "Id", "Nombre", viewModel.TipoSitioId);
+        return View(viewModel);
     }
 
     // GET: Sitios/Edit/5
@@ -75,29 +86,52 @@ public class SitiosController : Controller
         {
             return NotFound();
         }
+        
+        var viewModel = new EditarSitioViewModel
+        {
+            Id = sitio.Id,
+            TipoSitioId = sitio.TipoSitioId,
+            Nombre = sitio.Nombre,
+            Ubicacion = sitio.Ubicacion,
+            Descripcion = sitio.Descripcion,
+            CapacidadTotal = sitio.CapacidadTotal,
+            Activo = sitio.Activo
+        };
+        
         var tiposSitio = await _sitioService.ObtenerTiposSitioAsync();
         ViewBag.TipoSitioId = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(tiposSitio, "Id", "Nombre", sitio.TipoSitioId);
-        return View(sitio);
+        return View(viewModel);
     }
 
     // POST: Sitios/Edit/5
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, Sitio sitio)
+    public async Task<IActionResult> Edit(int id, EditarSitioViewModel viewModel)
     {
-        if (id != sitio.Id)
+        if (id != viewModel.Id)
         {
             return NotFound();
         }
 
         if (ModelState.IsValid)
         {
+            var sitio = new Sitio
+            {
+                Id = viewModel.Id,
+                TipoSitioId = viewModel.TipoSitioId,
+                Nombre = viewModel.Nombre,
+                Ubicacion = viewModel.Ubicacion,
+                Descripcion = viewModel.Descripcion,
+                CapacidadTotal = viewModel.CapacidadTotal,
+                Activo = viewModel.Activo
+            };
+            
             await _sitioService.ActualizarAsync(sitio);
             return RedirectToAction(nameof(Index));
         }
         var tiposSitio = await _sitioService.ObtenerTiposSitioAsync();
-        ViewBag.TipoSitioId = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(tiposSitio, "Id", "Nombre", sitio.TipoSitioId);
-        return View(sitio);
+        ViewBag.TipoSitioId = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(tiposSitio, "Id", "Nombre", viewModel.TipoSitioId);
+        return View(viewModel);
     }
 
     // GET: Sitios/Delete/5

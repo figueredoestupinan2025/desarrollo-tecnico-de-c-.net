@@ -37,6 +37,7 @@ public class ReservaService : IReservaService
             
             var habitacionesOcupadas = await _context.ReservasHabitaciones
                 .Where(rh =>
+                    rh.Reserva != null &&
                     rh.Reserva.FechaInicio < fechaFin &&
                     rh.Reserva.FechaFin > fechaInicio &&
                     (rh.Reserva.EstadoReservaId == 1 || rh.Reserva.EstadoReservaId == 2))
@@ -44,22 +45,24 @@ public class ReservaService : IReservaService
                 .ToListAsync();
 
             var habitacionesDisponibles = await _context.Habitaciones
-                .Include(h => h.Alojamiento)
-                .ThenInclude(a => a.Sitio)
+                .Include(h => h.Alojamiento!)
+                .ThenInclude(a => a.Sitio!)
                 .ThenInclude(s => s.TipoSitio)
                 .Where(h =>
                     !habitacionesOcupadas.Contains(h.Id) &&
                     h.Activo &&
+                    h.Alojamiento != null &&
                     h.Alojamiento.Activo &&
+                    h.Alojamiento.Sitio != null &&
                     h.Alojamiento.Sitio.Activo)
                 .Select(h => new HabitacionDisponibleDto
                 {
                     Id = h.Id,
                     Numero = h.Numero,
                     AlojamientoId = h.AlojamientoId,
-                    AlojamientoNombre = h.Alojamiento.Nombre,
+                    AlojamientoNombre = h.Alojamiento!.Nombre,
                     SitioId = h.Alojamiento.SitioId,
-                    SitioNombre = h.Alojamiento.Sitio.Nombre,
+                    SitioNombre = h.Alojamiento.Sitio!.Nombre,
                     CapacidadMaxima = h.CapacidadMaxima
                 })
                 .OrderBy(h => h.SitioNombre)
@@ -90,6 +93,7 @@ public class ReservaService : IReservaService
             
             var habitacionesOcupadas = await _context.ReservasHabitaciones
                 .Where(rh =>
+                    rh.Reserva != null &&
                     rh.Reserva.FechaInicio < fechaFin &&
                     rh.Reserva.FechaFin > fechaInicio &&
                     (rh.Reserva.EstadoReservaId == 1 || rh.Reserva.EstadoReservaId == 2))
@@ -97,13 +101,15 @@ public class ReservaService : IReservaService
                 .ToListAsync();
 
             var habitacionesDisponibles = await _context.Habitaciones
-                .Include(h => h.Alojamiento)
-                .ThenInclude(a => a.Sitio)
+                .Include(h => h.Alojamiento!)
+                .ThenInclude(a => a.Sitio!)
                 .ThenInclude(s => s.TipoSitio)
                 .Where(h =>
                     !habitacionesOcupadas.Contains(h.Id) &&
                     h.Activo &&
+                    h.Alojamiento != null &&
                     h.Alojamiento.Activo &&
+                    h.Alojamiento.Sitio != null &&
                     h.Alojamiento.Sitio.Activo &&
                     h.CapacidadMaxima >= numeroPersonas)
                 .Select(h => new HabitacionDisponibleDto
@@ -111,9 +117,9 @@ public class ReservaService : IReservaService
                     Id = h.Id,
                     Numero = h.Numero,
                     AlojamientoId = h.AlojamientoId,
-                    AlojamientoNombre = h.Alojamiento.Nombre,
+                    AlojamientoNombre = h.Alojamiento!.Nombre,
                     SitioId = h.Alojamiento.SitioId,
-                    SitioNombre = h.Alojamiento.Sitio.Nombre,
+                    SitioNombre = h.Alojamiento.Sitio!.Nombre,
                     CapacidadMaxima = h.CapacidadMaxima
                 })
                 .OrderBy(h => h.SitioNombre)
@@ -155,8 +161,7 @@ public class ReservaService : IReservaService
                     t.Activo &&
                     t.SitioId == sitioId &&
                     t.TipoTemporadaId == tipoTemporadaId &&
-                    numeroPersonas >= t.NumeroPersonasMin &&
-                    numeroPersonas <= t.NumeroPersonasMax);
+                    numeroPersonas >= t.NumeroPersonasMin);
 
             if (alojamientoId.HasValue)
             {
@@ -170,9 +175,9 @@ public class ReservaService : IReservaService
                     AlojamientoId = t.AlojamientoId,
                     AlojamientoNombre = t.Alojamiento != null ? t.Alojamiento.Nombre : null,
                     SitioId = t.SitioId,
-                    SitioNombre = t.Sitio.Nombre,
+                    SitioNombre = t.Sitio!.Nombre,
                     TipoTemporadaId = t.TipoTemporadaId,
-                    TipoTemporadaNombre = t.TipoTemporada.Nombre,
+                    TipoTemporadaNombre = t.TipoTemporada!.Nombre,
                     NumeroPersonasMin = t.NumeroPersonasMin,
                     NumeroPersonasMax = t.NumeroPersonasMax,
                     NumeroHabitaciones = t.NumeroHabitaciones,
@@ -215,7 +220,12 @@ public class ReservaService : IReservaService
                 new SqlParameter("@FechaFin", fechaFin),
                 tarifaTotalParam);
 
-            return (decimal)(tarifaTotalParam.Value ?? 0);
+            if (tarifaTotalParam.Value is null || tarifaTotalParam.Value is DBNull)
+            {
+                throw new InvalidOperationException("El procedimiento CalcularTarifaTotal no retornÃ³ el valor OUTPUT esperado.");
+            }
+
+            return Convert.ToDecimal(tarifaTotalParam.Value);
         }
         catch (Exception ex)
         {
@@ -233,8 +243,7 @@ public class ReservaService : IReservaService
                     t.SitioId == sitioId &&
                     t.TipoTemporadaId == tipoTemporadaId &&
                     t.NumeroHabitaciones == numeroHabitaciones &&
-                    numeroPersonas >= t.NumeroPersonasMin &&
-                    numeroPersonas <= t.NumeroPersonasMax);
+                    numeroPersonas >= t.NumeroPersonasMin);
 
             if (alojamientoId.HasValue)
             {
@@ -242,8 +251,16 @@ public class ReservaService : IReservaService
             }
 
             var tarifa = await query
+                .Where(t => numeroPersonas <= t.NumeroPersonasMax)
                 .OrderBy(t => t.EsTarifaEspecial)
-                .ThenBy(t => t.PrecioBase)
+                .ThenBy(t => t.NumeroPersonasMax)
+                .ThenBy(t => (double)t.PrecioBase)
+                .FirstOrDefaultAsync();
+
+            tarifa ??= await query
+                .OrderByDescending(t => t.NumeroPersonasMax)
+                .ThenBy(t => t.EsTarifaEspecial)
+                .ThenBy(t => (double)t.PrecioBase)
                 .FirstOrDefaultAsync();
 
             if (tarifa == null)
@@ -294,11 +311,58 @@ public class ReservaService : IReservaService
         }
     }
 
+    public async Task<bool> HabitacionesDisponiblesAsync(IEnumerable<int> habitacionesIds, DateTime fechaInicio, DateTime fechaFin)
+    {
+        var ids = habitacionesIds.Distinct().ToList();
+        if (!ids.Any() || fechaInicio >= fechaFin)
+        {
+            return false;
+        }
+
+        var habitacionesActivas = await _context.Habitaciones
+            .Include(h => h.Alojamiento)
+            .ThenInclude(a => a!.Sitio)
+            .Where(h =>
+                ids.Contains(h.Id) &&
+                h.Activo &&
+                h.Alojamiento != null &&
+                h.Alojamiento.Activo &&
+                h.Alojamiento.Sitio != null &&
+                h.Alojamiento.Sitio.Activo)
+            .Select(h => h.Id)
+            .ToListAsync();
+
+        if (habitacionesActivas.Count != ids.Count)
+        {
+            return false;
+        }
+
+        var habitacionesOcupadas = await _context.ReservasHabitaciones
+            .Where(rh =>
+                ids.Contains(rh.HabitacionId) &&
+                rh.Reserva != null &&
+                rh.Reserva.FechaInicio < fechaFin &&
+                rh.Reserva.FechaFin > fechaInicio &&
+                (rh.Reserva.EstadoReservaId == 1 || rh.Reserva.EstadoReservaId == 2))
+            .AnyAsync();
+
+        return !habitacionesOcupadas;
+    }
+
     public async Task<Reserva> CrearReservaAsync(Reserva reserva, List<int>? habitacionesIds = null)
     {
         using var transaction = await _context.Database.BeginTransactionAsync();
         try
         {
+            if (habitacionesIds != null && habitacionesIds.Any())
+            {
+                var disponibles = await HabitacionesDisponiblesAsync(habitacionesIds, reserva.FechaInicio, reserva.FechaFin);
+                if (!disponibles)
+                {
+                    throw new InvalidOperationException("Una o más habitaciones ya no están disponibles para las fechas seleccionadas.");
+                }
+            }
+
             _context.Reservas.Add(reserva);
             await _context.SaveChangesAsync();
 
@@ -333,6 +397,8 @@ public class ReservaService : IReservaService
             .Include(r => r.Sitio)
             .Include(r => r.Alojamiento)
             .Include(r => r.EstadoReserva)
+            .Include(r => r.ReservaHabitaciones)
+                .ThenInclude(rh => rh.Habitacion)
             .Where(r => r.UsuarioId == usuarioId)
             .OrderByDescending(r => r.FechaReserva)
             .ToListAsync();
@@ -344,6 +410,8 @@ public class ReservaService : IReservaService
             .Include(r => r.Sitio)
             .Include(r => r.Alojamiento)
             .Include(r => r.EstadoReserva)
+            .Include(r => r.ReservaHabitaciones)
+                .ThenInclude(rh => rh.Habitacion)
             .FirstOrDefaultAsync(r => r.Id == id);
     }
 }

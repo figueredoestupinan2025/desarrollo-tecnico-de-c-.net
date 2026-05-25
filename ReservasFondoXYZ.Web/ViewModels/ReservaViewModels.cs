@@ -23,6 +23,14 @@ public class DisponibilidadViewModel
     public int? SitioId { get; set; }
 }
 
+public class HabitacionSeleccionadaViewModel
+{
+    public int Id { get; set; }
+    public string Numero { get; set; } = string.Empty;
+    public string Descripcion { get; set; } = string.Empty;
+    public int CapacidadMaxima { get; set; }
+}
+
 public class CrearReservaViewModel
 {
     [Required]
@@ -73,12 +81,17 @@ public class PagoReservaViewModel
     [Required]
     public int HabitacionId { get; set; }
 
+    public List<int> HabitacionesIds { get; set; } = new();
+
+    public List<HabitacionSeleccionadaViewModel> HabitacionesSeleccionadas { get; set; } = new();
+
     [Required]
     public decimal TarifaTotal { get; set; }
 
     [Required(ErrorMessage = "El número de tarjeta es requerido")]
     [Display(Name = "Número de Tarjeta")]
     [StringLength(16, MinimumLength = 16, ErrorMessage = "El número de tarjeta debe tener 16 dígitos")]
+    [RegularExpression(@"^\d{16}$", ErrorMessage = "El número de tarjeta debe contener solo dígitos")]
     public string NumeroTarjeta { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "El nombre del titular es requerido")]
@@ -93,6 +106,7 @@ public class PagoReservaViewModel
     [Required(ErrorMessage = "El CVV es requerido")]
     [Display(Name = "CVV")]
     [StringLength(3, MinimumLength = 3, ErrorMessage = "El CVV debe tener 3 dígitos")]
+    [RegularExpression(@"^\d{3}$", ErrorMessage = "El CVV debe contener solo dígitos")]
     public string CVV { get; set; } = string.Empty;
 }
 
@@ -170,6 +184,43 @@ public class EditarHabitacionViewModel
 
     [Required]
     public int CapacidadMaxima { get; set; }
+
+    public bool Activo { get; set; }
+}
+
+public class CrearSitioViewModel
+{
+    [Required]
+    public int TipoSitioId { get; set; }
+
+    [Required]
+    public string Nombre { get; set; } = string.Empty;
+
+    public string? Ubicacion { get; set; }
+
+    public string? Descripcion { get; set; }
+
+    [Required]
+    public int CapacidadTotal { get; set; }
+}
+
+public class EditarSitioViewModel
+{
+    [Required]
+    public int Id { get; set; }
+
+    [Required]
+    public int TipoSitioId { get; set; }
+
+    [Required]
+    public string Nombre { get; set; } = string.Empty;
+
+    public string? Ubicacion { get; set; }
+
+    public string? Descripcion { get; set; }
+
+    [Required]
+    public int CapacidadTotal { get; set; }
 
     public bool Activo { get; set; }
 }

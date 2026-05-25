@@ -47,7 +47,7 @@ public class Reserva
     [Column(TypeName = "decimal(18,2)")]
     public decimal TarifaTotal { get; set; }
 
-    public DateTime FechaReserva { get; set; } = DateTime.Now;
+    public DateTime FechaReserva { get; set; }
 
     public string? Observaciones { get; set; }
 
